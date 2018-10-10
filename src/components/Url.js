@@ -1,28 +1,43 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import { connect } from 'react-redux'
+import {deleteUrl} from '../actions'
 
-const Url = ({ name, url, onDelete }) => {
+const Url = ({ url, id, onDelete }) => (
   <tr>
     <td>
       {url}
-    </td>
-    <td>
-      {name}
     </td>
     <td>
       <a href={url} target='_blank'>
       <button>Visit</button></a>
     </td>
     <td>
-      <button onClick={onDelete}>Delete</button>
+      <button onClick={() => onDelete(id)}>Delete</button>
     </td>
   </tr>
-}
+)
 
 Url.propTypes = {
-  name: PropTypes.string.isRequired,
   url: PropTypes.string.isRequired,
+  id: PropTypes.number.isRequired,
   onDelete: PropTypes.func.isRequired,
 }
+const mapStateToProps = state => {
+  return {
+    urls: state.urls
+  }
+}
 
-export default Url;
+const mapDispatchToProps = dispatch => {
+  return {
+    onDelete: (id) =>
+      dispatch(deleteUrl(id))
+  }
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Url)
+// export default Url;

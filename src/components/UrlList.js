@@ -1,14 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Url from './Url';
-
+import {deleteUrl} from '../actions/index'
 const UrlList = ({ urls }) => (
   <table>
     <thead>
       <tr>
-        <th>
-          Name
-        </th>
         <th>
           Link
         </th>
@@ -26,13 +23,14 @@ const UrlList = ({ urls }) => (
           key={url.id}
           {...url}
           onDelete={() => deleteUrl(url.id)}
+          id={url.id}
         />
       )}
     </tbody>
   </table>
 )
 
-TodoList.PropTypes = {
+UrlList.PropTypes = {
   urls: PropTypes.arrayOf(
     PropTypes.shape({
       id: PropTypes.number.isRequired,

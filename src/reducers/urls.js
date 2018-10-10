@@ -6,11 +6,11 @@ const urls = (state = [], action) => {
         {
           id: action.id,
           url: action.url,
-          name: action.name
         }
       ]
     case 'DELETE_URL':
-      return state.filter(url => url.id !== action.id);
+      const newState = state.filter(url => url.id !== action.id);
+      return newState
     default:
       return state;
   }

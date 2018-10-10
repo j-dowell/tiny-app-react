@@ -1,9 +1,8 @@
-nextUrlId = 0
-export const addUrl = (url, name) => ({
+let nextUrlId = 0
+export const addUrl = (url) => ({
   type: 'ADD_URL',
   id: nextUrlId++,
   url,
-  name
 })
 
 export const deleteUrl = (id) => ({

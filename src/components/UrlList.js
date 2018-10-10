@@ -7,6 +7,9 @@ const UrlList = ({ urls }) => (
     <thead>
       <tr>
         <th>
+          Name
+        </th>
+        <th>
           Link
         </th>
         <th>

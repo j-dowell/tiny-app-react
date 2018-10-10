@@ -6,6 +6,7 @@ const urls = (state = [], action) => {
         {
           id: action.id,
           url: action.url,
+          name: action.name
         }
       ]
     case 'DELETE_URL':

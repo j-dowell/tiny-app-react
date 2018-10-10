@@ -3,8 +3,11 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import {deleteUrl} from '../actions'
 
-const Url = ({ url, id, onDelete }) => (
+const Url = ({ name, url, id, onDelete }) => (
   <tr>
+    <td>
+      { name }
+    </td>
     <td>
       {url}
     </td>

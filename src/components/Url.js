@@ -24,3 +24,5 @@ Url.propTypes = {
   url: PropTypes.string.isRequired,
   onDelete: PropTypes.func.isRequired,
 }
+
+export default Url;

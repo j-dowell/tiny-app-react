@@ -1,3 +1,4 @@
+import {randomIdGenerator} from '../helpers/randomIdGenerator'
 const urls = (state = [], action) => {
   switch (action.type) {
     case 'ADD_URL':
@@ -6,7 +7,8 @@ const urls = (state = [], action) => {
         {
           id: action.id,
           url: action.url,
-          name: action.name
+          name: action.name,
+          shortUrl: randomIdGenerator()
         }
       ]
     case 'DELETE_URL':

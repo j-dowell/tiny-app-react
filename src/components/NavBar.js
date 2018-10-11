@@ -9,8 +9,7 @@ class Navbar extends Component {
     if (this.props.authenticated) {
       return [
       <React.Fragment key="container">
-        <li key="secret"><Link to="/secret">Secret</Link></li>
-        <li key="signout"><Link to="/signout">Sign out</Link></li>
+        <li key="secret"><Link to="/urls">Urls</Link></li>
           <SignOut signOutAction={signOutAction}/>
         </React.Fragment>
       ];
@@ -25,7 +24,7 @@ class Navbar extends Component {
     return (
       <nav className="navbar">
         <div className="container">
-          <Link to="/"><span className="brand">Auth-app</span></Link>
+          <Link to="/"><span className="brand">Home</span></Link>
           <ul>
             {this.navbarLinks()}
           </ul>

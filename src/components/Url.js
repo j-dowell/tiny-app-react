@@ -43,4 +43,3 @@ export default connect(
   mapStateToProps,
   mapDispatchToProps
 )(Url)
-// export default Url;

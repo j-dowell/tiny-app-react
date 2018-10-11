@@ -31,7 +31,7 @@ export function signInAction({ email, password }, history) {
         dispatch({ type: AUTHENTICATED });
         localStorage.setItem('user', res.data);
         console.log(localStorage)
-        history.push('/secret');
+        history.push('/');
       }
     } catch(error) {
       dispatch({

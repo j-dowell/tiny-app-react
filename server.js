@@ -33,6 +33,7 @@ const client = new MongoClient(url, { useNewUrlParser: true });
     const user = await col
       .findOne({email: email})
       .catch(err => console.log(`Error finding user`, err))
+    // If user exists in database
     if (user) {
       console.log(user)
       // Checking hashed password
@@ -51,6 +52,7 @@ const client = new MongoClient(url, { useNewUrlParser: true });
           auth: false
         }
       }
+      // If user doesn't exist in database
     } else {
       console.log(`Couldn't find user`)
       return {

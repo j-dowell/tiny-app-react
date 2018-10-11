@@ -24,28 +24,35 @@ const client = new MongoClient(url, { useNewUrlParser: true });
     // Connecting to Mongo
     await client
       .connect()
-      .catch(err => console.log(err));
+      .catch(err => console.log(`Couldn't connect`, err));
     console.log("Connected correctly to server");
     const db = client.db(dbName);
     // Accessing users collection
     const col = db.collection('users');
     // Searching for user by email
-    const result = await col
-      .find({email: email})
-      .toArray()
-      .catch(err => console.log(err))
-    const user = result[0];
-    // Checking hashed password
-    const passwordisValid = await bcrypt
-      .compare(password, user.password_digest)
-      .catch(err => console.log(err))
+    const user = await col
+      .findOne({email: email})
+      .catch(err => console.log(`Error finding user`, err))
+    if (user) {
+      console.log(user)
+      // Checking hashed password
+      const passwordisValid = await bcrypt
+        .compare(password, user.password_digest)
+        .catch(err => console.log(`Password didn't match`, err))
 
-    if (passwordisValid) {
-      return {
-        id: user._id,
-        auth: true
+      if (passwordisValid) {
+        return {
+          id: user._id,
+          auth: true
+        }
+      } else {
+        console.log(`Password doesn't match`)
+        return {
+          auth: false
+        }
       }
     } else {
+      console.log(`Couldn't find user`)
       return {
         auth: false
       }

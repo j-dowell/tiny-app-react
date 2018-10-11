@@ -18,6 +18,31 @@ app.use(bodyParser.json());
 const saltRounds = 10;
 
 
+const registerUser = async function(email, password, first_name, last_name) {
+const client = new MongoClient(url, { useNewUrlParser: true });
+  try{
+    await client
+      .connect()
+      .catch(err => console.log(`Couldn't connect`, err));
+    console.log('connected to database');
+    const db = client.db(dbName);
+    const password_digest = bcrypt
+      .hash(password, saltRounds)
+      .catch(err => console.log('error hashing password', err));
+
+    await db.collection('users')
+      .insertOne({
+        first_name,
+        last_name,
+        password_digest,
+        email,
+      })
+      .catch(err => console.log(`Error adding user`, err));
+  } catch(err) {
+    console.log(err.stack);
+  }
+}
+
 const verifyUserLogin = async function(email, password) {
 const client = new MongoClient(url, { useNewUrlParser: true });
   try {
@@ -86,21 +111,29 @@ app.post('/api/login', (req, res) => {
   console.log('making login request')
   console.log('req body', req.body)
 
-  verifyUserLogin(req.body.email, req.body.password).then((result) => {
-    console.log('verification result', result)
-    if (result.auth === true) {
-      const token = jwt.sign({ id: result.id }, key, {
-        expiresIn: 86400 // expires in 24 hours
-      });
-      console.log('Token:', token)
-      res.json({auth:true, token:token})
-    } else {
-      console.log('No token given, auth false')
-      res.json({auth:false})
-    }
-  })
+  verifyUserLogin(req.body.email, req.body.password)
+    .then((result) => {
+      console.log('verification result', result)
+      if (result.auth === true) {
+        const token = jwt.sign({ id: result.id }, key, {
+          expiresIn: 86400 // expires in 24 hours
+        });
+        console.log('Token:', token)
+        res.json({auth:true, token:token})
+      } else {
+        console.log('No token given, auth false')
+        res.json({auth:false})
+      }
+    })
   .catch(err => console.log(err));
 });
+
+app.post('/api/register', (req, res) => {
+  console.log('registering user');
+  const { email, password, first_name, last_name } = req.body;
+  registerUser(email, password, first_name, last_name);
+
+})
 
 
 const port = process.env.PORT || 3005;

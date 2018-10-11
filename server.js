@@ -12,6 +12,15 @@ app.use(bodyParser.json());
 //   res.sendFile(path.join(__dirname, 'index.html'))
 // })
 
+app.post('/api/login', (req, res) => {
+  console.log('making login request')
+  if (req.body.email === 'test@gmail.com' && req.body.password === 'test') {
+    res.json('true')
+  } else {
+    res.json('false')
+  }
+})
+
 const port = process.env.PORT || 3005;
 app.listen(port);
 

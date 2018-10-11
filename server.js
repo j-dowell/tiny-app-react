@@ -3,11 +3,15 @@ const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
 const jwt = require('jsonwebtoken')
-const ENV = process.env.ENV || "development";
+// const ENV = process.env.ENV || "development";
 const key = process.env.JWT_key;
+const mongoUser = process.env.MONGO_USER;
+const mongoPw = process.env.MONGO_PW
+var MongoClient = require('mongodb').MongoClient;
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
+const uri = `mongodb+srv://${mongoUser}:${mongoPw}@cluster0-btgde.mongodb.net/test?retryWrites=true`;
 
 app.get(`/token/:id`, (req, res) => {
   console.log('api token')
@@ -24,7 +28,7 @@ app.get(`/token/:id`, (req, res) => {
       res.json({auth:true})
     }
   })
-})
+});
 
 app.post('/api/login', (req, res) => {
   console.log('making login request')
@@ -43,7 +47,23 @@ app.post('/api/login', (req, res) => {
   } else {
     res.json({auth:false})
   }
-})
+});
+
+
+(async function() {
+  try {
+    const client = await MongoClient.connect(uri,{ useNewUrlParser: true });
+    const collection = client.db('tiny-app').collection('users')
+    collection.find({}).toArray(function(err, result) {
+    if (err) throw err;
+    console.log(result);
+    client.close();
+  });
+  } catch(e) {
+    console.error(e)
+  }
+})();
+
 
 const port = process.env.PORT || 3005;
 app.listen(port);

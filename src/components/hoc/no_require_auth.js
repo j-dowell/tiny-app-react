@@ -6,13 +6,13 @@ export default function (ComposedComponent) {
   class NotAuthentication extends Component {
     componentWillMount() {
       if (this.props.authenticated) {
-        this.props.history.push('/secret');
+        this.props.history.push('/urls');
       }
     }
 
     componentWillUpdate(nextProps) {
       if (nextProps.authenticated) {
-        this.props.history.push('/secret');
+        this.props.history.push('/urls');
       }
     }
 

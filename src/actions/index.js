@@ -1,17 +1,17 @@
 import axios from 'axios';
 
-let nextUrlId = 0
-export const addUrl = (name, url) => ({
-  type: 'ADD_URL',
-  id: nextUrlId++,
-  name,
-  url,
-})
+// let nextUrlId = 0
+// export const addUrl = (name, url) => ({
+//   type: 'ADD_URL',
+//   id: nextUrlId++,
+//   name,
+//   url,
+// })
 
-export const deleteUrl = (id) => ({
-  type: 'DELETE_URL',
-  id
-})
+// export const deleteUrl = (id) => ({
+//   type: 'DELETE_URL',
+//   id
+// })
 
 export const FETCH_URLS_BEGIN   = 'FETCH_URLS_BEGIN';
 export const FETCH_URLS_SUCCESS = 'FETCH_URLS_SUCCESS';

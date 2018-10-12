@@ -1,8 +1,9 @@
-import React from 'react'
+import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { addUrl } from '../actions'
+import { addUrl } from '../actions/addUrl'
 
-const AddUrl = ({ dispatch }) => {
+
+const AddUrl = ({dispatch}) => {
   let name
   let url
   return (
@@ -10,7 +11,8 @@ const AddUrl = ({ dispatch }) => {
       <form
         onSubmit={e => {
           e.preventDefault()
-          dispatch(addUrl(name.value, url.value))
+          // this.props.dispatch(addUrl(name.value, url.value))
+          dispatch(addUrl(url.value, name.value))
           name.value = ''
           url.value = ''
         }}
@@ -25,4 +27,16 @@ const AddUrl = ({ dispatch }) => {
   )
 }
 
+// const mapStateToProps = state => {
+//   return {
+//     store: state.store
+//   }
+// }
+// const mapDispatchToProps = dispatch => {
+//   return {
+//     submitUrl: (url, name) => {
+//       dispatch(addUrl(url, name))
+//     }
+//   }
+// }
 export default connect()(AddUrl)

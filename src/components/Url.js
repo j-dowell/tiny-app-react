@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import {deleteUrl} from '../actions'
+// import {deleteUrl} from '../actions'
 
 const Url = ({ name, url, id, onDelete }) => (
   <tr>
@@ -33,10 +33,10 @@ const mapStateToProps = state => {
 }
 
 const mapDispatchToProps = dispatch => {
-  return {
-    onDelete: (id) =>
-      dispatch(deleteUrl(id))
-  }
+  // return {
+  //   onDelete: (id) =>
+  //     dispatch(deleteUrl(id))
+  // }
 }
 
 export default connect(

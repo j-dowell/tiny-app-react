@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Url from './Url';
-import {deleteUrl, userUrls} from '../actions'
+import { userUrls} from '../actions'
 import { connect } from 'react-redux'
 
 class UrlList extends Component {
@@ -45,7 +45,7 @@ class UrlList extends Component {
         <Url
           key={item.id}
           {...item}
-          onDelete={() => deleteUrl(item.id)}
+          // onDelete={() => deleteUrl(item.id)}
           id={item.id}
         />
       )}

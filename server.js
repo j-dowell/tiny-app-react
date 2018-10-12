@@ -226,6 +226,32 @@ app.post('/api/register', (req, res) => {
   })
   .catch(err => console.log(err))
 
+});
+
+async function addUrl(newUrl, name) {
+  const client = new MongoClient(url, { useNewUrlParser: true });
+
+  try {
+    await client.connect();
+    console.log("Connected correctly to server");
+
+    const db = client.db(dbName);
+    const col = db.collection('users');
+    let r;
+
+    r = await col.updateOne({email:'test@gmail.com'}, {$push: {urls: {url:newUrl, name:name} }});
+
+    console.log(r);
+  } catch (err) {
+    console.log(err.stack);
+  }
+}
+
+
+
+app.post('/api/addUrl', (req, res) => {
+  console.log('hit addurl api')
+  addUrl(req.body.newUrl, req.body.name).then(result => console.log(result));
 })
 
 

@@ -21,6 +21,7 @@ async function hashPassword(password) {
   const hash = await bcrypt.hash(password, saltRounds)
   return hash;
 }
+
 const registerUser = async function(email, password, first_name, last_name) {
 const client = new MongoClient(url, { useNewUrlParser: true });
   try{
@@ -39,12 +40,10 @@ const client = new MongoClient(url, { useNewUrlParser: true });
         email,
       })
       .then(response => {
-        return response.ops[0]
+        return response.ops[0] // return user object after registering
       })
       .catch(err => console.log(`Error adding user`, err));
-      // console.log(newUserObject);
-      return newUserObject;
-    // return {user_added:true};
+    return newUserObject;
   } catch(err) {
     console.log(err.stack);
   }

@@ -2,7 +2,43 @@ import React, { Component } from 'react';
 import { Field, reduxForm } from 'redux-form';
 import { registerUser } from '../actions';
 import { connect } from 'react-redux';
-import { withRouter } from 'react-router-dom'
+
+const validate = values => {
+  const errors = {}
+  if (!values.first_name) {
+    errors.first_name = 'Required'
+  } 
+  if (!values.last_name) {
+    errors.last_name = 'Required'
+  } 
+  if (!values.email) {
+    errors.email = 'Required'
+  } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
+    errors.email = 'Invalid email address'
+  }
+  if (!values.password) {
+    errors.password = 'Required'
+  }  else if (values.password.length < 7) {
+    errors.password = 'Password needs to be at least 6 characters'
+  }
+  return errors
+}
+const renderField = ({
+  input,
+  label,
+  type,
+  meta: { touched, error, warning }
+}) => (
+  <div>
+    <label>{label}</label>
+    <div>
+      <input {...input} type={type} />
+      {touched &&
+        ((error && <span>{error}</span>) ||
+          (warning && <span>{warning}</span>))}
+    </div>
+  </div>
+)
 
 class Register extends Component {
   submit = (values) => {
@@ -30,23 +66,31 @@ class Register extends Component {
           <form onSubmit={ handleSubmit(this.submit) }>
             <Field name="email"
                    component="input"
-                   type="text"
-                   placeholder="Email" 
+                   type="email"
+                   label="Email"
+                   placeholder="Email"
+                   component={renderField}
             />
             <Field name="password" 
                    component="input"
                    type="password"
-                   placeholder="Password" 
+                   label="Password"
+                   placeholder="Password"
+                   component={renderField}
             />
             <Field name="first_name" 
                    component="input"
                    type="text"
-                   placeholder="John" 
+                   label="First Name"
+                   placeholder="John"
+                   component={renderField}
             />
             <Field name="last_name" 
                    component="input"
                    type="text"
-                   placeholder="Smith" 
+                   label="Last Name"
+                   placeholder="Smith"
+                   component={renderField}
             />
             <button type="submit" className="blue">Register</button>
           </form>
@@ -63,7 +107,8 @@ function mapStateToProps(state) {
 
 
 const reduxFormSignin = reduxForm({
-  form: 'register'
+  form: 'register',
+  validate
 })(Register);
 
 export default connect(mapStateToProps, {registerUser})(reduxFormSignin);

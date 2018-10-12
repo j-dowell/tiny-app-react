@@ -82,6 +82,11 @@ export function registerUser({email, password, first_name, last_name}, history) 
           type: AUTHENTICATED
         })
         history.push('/urls');
+      } else {
+        dispatch ({
+          type: AUTHENTICATION_ERROR,
+          payload: 'Email already exists!'
+        })
       }
     })
   }

@@ -22,6 +22,27 @@ async function hashPassword(password) {
   return hash;
 }
 
+async function doesUserExist(email) {
+  const client = new MongoClient(url, { useNewUrlParser: true });
+  try {
+    await client
+      .connect()
+      .catch(err => console.log(`Couldn't connect`, err));
+    const db = client.db(dbName);
+    const user = await db.collection('users')
+      .findOne({email: email})
+      .catch(err => console.log('error retrieving user', err));
+    if (user) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+  catch(err) {
+    console.log(err.stack);
+  }
+}
+
 const registerUser = async function(email, password, first_name, last_name) {
 const client = new MongoClient(url, { useNewUrlParser: true });
   try{
@@ -32,20 +53,26 @@ const client = new MongoClient(url, { useNewUrlParser: true });
     const db = client.db(dbName);
     const password_digest = await hashPassword(password);
     console.log(password_digest);
-    const newUserObject = await db.collection('users')
-      .insertOne({
-        first_name,
-        last_name,
-        password_digest,
-        email,
-      })
-      .then(response => {
-        return response.ops[0] // return user object after registering
-      })
-      .catch(err => console.log(`Error adding user`, err));
-    return newUserObject;
-  } catch(err) {
-    console.log(err.stack);
+    const userExists = await doesUserExist(email);
+    if (userExists) {
+      console.log('Email already exists!');
+      return {auth:false};
+    } else {
+      const newUserObject = await db.collection('users')
+        .insertOne({
+          first_name,
+          last_name,
+          password_digest,
+          email,
+        })
+        .then(response => {
+          return response.ops[0] // return user object after registering
+        })
+        .catch(err => console.log(`Error adding user`, err));
+      return {newUserObject, auth:true};
+    }
+    } catch(err) {
+      console.log(err.stack);
   }
 }
 
@@ -140,12 +167,16 @@ app.post('/api/register', (req, res) => {
   console.log(email, password)
   registerUser(email, password, first_name, last_name)
   .then(result => {
+    if (result.auth) {
     console.log('result', result)
     const token = jwt.sign({ id: result._id }, key, {
       expiresIn: 86400 // expires in 24 hours
     });
     console.log('Token:', token)
     res.json({user_added:true, token:token})
+  } else {
+    res.json({user_added:false})
+  }
   })
   .catch(err => console.log(err))
 

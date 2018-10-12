@@ -67,10 +67,14 @@ export function signOutAction() {
   }
 }
 
-export const registerUser = (email, password, first_name, last_name) => ({
-  type: 'REGISTER_USER',
-  email,
-  password,
-  first_name,
-  last_name
-})
+// export const REGISTER_USER = 'REGISTER_USER';
+export function registerUser({email, password, first_name, last_name}, history) {
+  return function(dispatch) {
+    return axios.post(`/api/register`, {email, password, first_name, last_name})
+    .then(res => {
+      console.log(res);
+        history.push('/login');
+    })
+    .catch(err => console.log(err));
+  }
+}

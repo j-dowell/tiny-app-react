@@ -15,9 +15,12 @@ const dbName = 'tiny-app';
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
-const saltRounds = 10;
 
-
+async function hashPassword(password) {
+  const saltRounds = 10;
+  const hash = await bcrypt.hash(password, saltRounds)
+  return hash;
+}
 const registerUser = async function(email, password, first_name, last_name) {
 const client = new MongoClient(url, { useNewUrlParser: true });
   try{
@@ -26,10 +29,8 @@ const client = new MongoClient(url, { useNewUrlParser: true });
       .catch(err => console.log(`Couldn't connect`, err));
     console.log('connected to database');
     const db = client.db(dbName);
-    const password_digest = bcrypt
-      .hash(password, saltRounds)
-      .catch(err => console.log('error hashing password', err));
-
+    const password_digest = await hashPassword(password);
+    console.log(password_digest);
     await db.collection('users')
       .insertOne({
         first_name,

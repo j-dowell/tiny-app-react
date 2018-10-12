@@ -9,6 +9,7 @@ const bcrypt = require('bcrypt');
 const key = process.env.JWT_key;
 const mongoUser = process.env.MONGO_USER;
 const mongoPw = process.env.MONGO_PW
+const mongodb = require('mongodb');
 const MongoClient = require('mongodb').MongoClient;
 const url = `mongodb+srv://${mongoUser}:${mongoPw}@cluster0-btgde.mongodb.net/test?retryWrites=true`;
 const dbName = 'tiny-app';
@@ -137,6 +138,50 @@ app.get(`/token/:id`, (req, res) => {
     } else {
       console.log('Verified Token', decoded.id)
       res.json({auth:true})
+    }
+  })
+});
+
+const findUserUrlList = async function(id) {
+  const client = new MongoClient(url, { useNewUrlParser: true });
+  const userID = new mongodb.ObjectID(id)
+  try {
+    await client
+      .connect()
+      .catch(err => console.log(`Couldn't connect`, err));
+    const db = client.db(dbName);
+    const user = await db.collection('users')
+      .findOne({_id: userID})
+      .catch(err => console.log('error retrieving user', err));
+    if (user) {
+      console.log(user);
+      return user;
+    }
+  }
+  catch(err) {
+    console.log(err.stack);
+  }
+}
+app.get('/api/urlList/:userToken', (req, res) => {
+  console.log('Trying to find urls');
+  jwt.verify(req.params.userToken, key, function(err, decoded) {
+    if (err) {
+      console.log(req.params.userToken)
+      console.log('token err', err);
+      console.log('Tried to verify token and failed')
+      let response = {
+        auth: false,
+        message: 'Failed to authenticate token.'
+      }
+      res.json(response)
+    } else {
+      console.log('Verified Token', decoded.id)
+      findUserUrlList(decoded.id)
+      .then(response => {
+        console.log(response);
+        res.json(response)
+        })
+        .catch(err => console.log(err));
     }
   })
 });

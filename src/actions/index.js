@@ -13,6 +13,38 @@ export const deleteUrl = (id) => ({
   id
 })
 
+export const FETCH_URLS_BEGIN   = 'FETCH_URLS_BEGIN';
+export const FETCH_URLS_SUCCESS = 'FETCH_URLS_SUCCESS';
+export const FETCH_URLS_FAILURE = 'FETCH_URLS_FAILURE';
+
+export const fetchUrlsBegin = () => ({
+  type: FETCH_URLS_BEGIN
+});
+
+export const fetchUrlsSuccess = URLS => ({
+  type: FETCH_URLS_SUCCESS,
+  payload: { URLS }
+});
+
+export const fetchUrlsError = error => ({
+  type: FETCH_URLS_FAILURE,
+  payload: { error }
+});
+
+export function userUrls() {
+  console.log('made it to userUrls action function')
+  return function(dispatch) {
+    dispatch(fetchUrlsBegin());
+    let userToken = localStorage.getItem('user');
+    console.log('about to get users urls, with token:', userToken);
+    return axios.get(`/api/urlList/${userToken}`)
+      .then(response => {
+        dispatch(fetchUrlsSuccess(response.data.urls));
+        console.log(response.data.urls);
+        return response.data.urls;
+      })
+  }
+}
 export const AUTHENTICATED = 'authenticated_user';
 export const UNAUTHENTICATED = 'unauthenticated_user';
 export const AUTHENTICATION_ERROR = 'authentication_error';
@@ -91,3 +123,4 @@ export function registerUser({email, password, first_name, last_name}, history) 
     })
   }
 }
+

@@ -32,7 +32,7 @@ export function signInAction({ email, password }, history) {
         dispatch({ type: AUTHENTICATED });
         localStorage.setItem('user', res.data.token);
         console.log(localStorage)
-        history.push('/');
+        history.push('/urls');
       }
     })
   } 
@@ -67,14 +67,22 @@ export function signOutAction() {
   }
 }
 
-// export const REGISTER_USER = 'REGISTER_USER';
+export const REGISTER_USER = 'REGISTER_USER';
+export const REGISTER_USER_SUCCESS = 'REGISTER_USER_SUCCESS';
+
 export function registerUser({email, password, first_name, last_name}, history) {
+  console.log('history', history);  
   return function(dispatch) {
+    console.log('history', history);
     return axios.post(`/api/register`, {email, password, first_name, last_name})
     .then(res => {
-      console.log(res);
-        history.push('/login');
+      if (res.data.user_added) {
+        localStorage.setItem('user', res.data.token);
+        dispatch({
+          type: AUTHENTICATED
+        })
+        history.push('/urls');
+      }
     })
-    .catch(err => console.log(err));
   }
 }

@@ -2,10 +2,13 @@ import React, { Component } from 'react';
 import { Field, reduxForm } from 'redux-form';
 import { registerUser } from '../actions';
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom'
 
 class Register extends Component {
   submit = (values) => {
+    console.log(this.props.history)    
     this.props.registerUser(values, this.props.history);
+    console.log(this.props.history)
   }
 
   errorMessage() {

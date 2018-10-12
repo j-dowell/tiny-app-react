@@ -31,14 +31,20 @@ const client = new MongoClient(url, { useNewUrlParser: true });
     const db = client.db(dbName);
     const password_digest = await hashPassword(password);
     console.log(password_digest);
-    await db.collection('users')
+    const newUserObject = await db.collection('users')
       .insertOne({
         first_name,
         last_name,
         password_digest,
         email,
       })
+      .then(response => {
+        return response.ops[0]
+      })
       .catch(err => console.log(`Error adding user`, err));
+      // console.log(newUserObject);
+      return newUserObject;
+    // return {user_added:true};
   } catch(err) {
     console.log(err.stack);
   }
@@ -132,7 +138,17 @@ app.post('/api/login', (req, res) => {
 app.post('/api/register', (req, res) => {
   console.log('registering user');
   const { email, password, first_name, last_name } = req.body;
-  registerUser(email, password, first_name, last_name);
+  console.log(email, password)
+  registerUser(email, password, first_name, last_name)
+  .then(result => {
+    console.log('result', result)
+    const token = jwt.sign({ id: result._id }, key, {
+      expiresIn: 86400 // expires in 24 hours
+    });
+    console.log('Token:', token)
+    res.json({user_added:true, token:token})
+  })
+  .catch(err => console.log(err))
 
 })
 

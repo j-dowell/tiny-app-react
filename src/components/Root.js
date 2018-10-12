@@ -14,9 +14,9 @@ const Root = ({ store }) => (
   <Provider store={store}>
     <Router>
       <Switch>
-        <Route path="/signin" component={noRequireAuth(SignIn)} />
-        <Route path="/register" component={noRequireAuth(Register)}/>
-        <Route path="/urls" component={requireAuth(App)} />
+        <Route exact path="/signin" component={noRequireAuth(SignIn)} />
+        <Route exact path="/register" component={noRequireAuth(Register)}/>
+        <Route exact path="/urls" component={requireAuth(App)} />
         <Route exact path="/" component={requireAuth(NavBar)} />
       </Switch>
     </Router>

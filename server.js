@@ -64,6 +64,7 @@ const client = new MongoClient(url, { useNewUrlParser: true });
           last_name,
           password_digest,
           email,
+          urls: ['https://www.example.org']
         })
         .then(response => {
           return response.ops[0] // return user object after registering

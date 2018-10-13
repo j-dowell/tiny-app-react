@@ -2,6 +2,14 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { addUrl } from '../actions/addUrl'
 
+const urlValidatorRegex = /^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$/
+
+function validateForm(url) {
+  if (!urlValidatorRegex.test(url)) {
+      alert("not proper url");
+      return false;
+  }
+}
 
 const AddUrl = ({dispatch}) => {
   let name
@@ -11,13 +19,14 @@ const AddUrl = ({dispatch}) => {
       <form
         onSubmit={e => {
           e.preventDefault()
+          validateForm(url.value)
           dispatch(addUrl(url.value, name.value))
           name.value = ''
           url.value = ''
         }}
       >
-        <input ref={node => name = node} />
-        <input ref={node => url = node} />
+        <input required ref={node => name = node} />
+        <input required ref={node => url = node} />
         <button type="submit">
           Add URL
         </button>

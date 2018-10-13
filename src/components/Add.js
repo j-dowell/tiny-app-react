@@ -21,12 +21,13 @@ const renderField = ({
   input,
   label,
   type,
+  placeholder,
   meta: { touched, error, warning }
 }) => (
   <div>
     <label>{label}</label>
     <div>
-      <input {...input} type={type} />
+      <input {...input} placeholder={placeholder} type={type} />
       {touched &&
         ((error && <span>{error}</span>) ||
           (warning && <span>{warning}</span>))}
@@ -57,19 +58,17 @@ class AddNewUrl extends Component {
         <div className="container">
           <h2>Add URL</h2>
           <form onSubmit={ handleSubmit(this.submit) }>
-            <Field name="url"
-                  //  component="input"
+            <Field name="name" 
                    type="text"
-                   label="url"
-                   placeholder="URL"
+                   label="Name"
+                   placeholder="Google"
                    component={renderField}
             />
-            <Field name="name" 
-                  //  component="input"
-                   type="text"
-                   label="name"
-                   placeholder="name"
-                   component={renderField}
+            <Field name="url"
+              type="text"
+              label="Link"
+              placeholder="www.google.com"
+              component={renderField}
             />
             <button type="submit" className="blue">Add</button>
           </form>

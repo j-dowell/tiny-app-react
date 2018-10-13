@@ -34,6 +34,9 @@ class UrlList extends Component {
                   Link
                 </th>
                 <th>
+                  Date Created
+                </th>
+                <th>
                   View
                 </th>
                 <th>
@@ -46,6 +49,7 @@ class UrlList extends Component {
                 <Url
                   key={item.url}
                   name={item.name}
+                  date={item.date_added}
                   url={(httpRegex.test(item.url)) ? (item.url) : ('https://' + item.url) }
                   // onDelete={() => deleteUrl(item.id)}
                   id={item.id}

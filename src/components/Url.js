@@ -3,13 +3,16 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 // import {deleteUrl} from '../actions'
 
-const Url = ({ name, url, id, onDelete }) => (
+const Url = ({ name, url, id, onDelete, date }) => (
   <tr>
     <td>
       { name }
     </td>
     <td>
       {url}
+    </td>
+    <td>
+      {new Date(date).toLocaleString()}
     </td>
     <td>
       <a href={url} target='_blank' rel="noopener noreferrer">

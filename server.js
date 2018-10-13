@@ -229,7 +229,7 @@ async function addUrl(newUrl, name, token) {
     console.log("Connected correctly to server");
     const db = client.db(dbName);
     const col = db.collection('users');
-    const result = await col.updateOne({_id:userObjectID}, {$push: {urls: {url:newUrl, name:name} }});
+    const result = await col.updateOne({_id:userObjectID}, {$push: {urls: {url:newUrl, name:name, date_added: new Date()} }});
     console.log('Add URL result', result);
     assert.equal(1, result.matchedCount);
     assert.equal(1, result.modifiedCount);

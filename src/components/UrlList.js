@@ -68,37 +68,6 @@ const mapStateToProps = state => {
   }
 }
 
-// const UrlList = ({ urls }) => (
-//   <table>
-//     <thead>
-//       <tr>
-//         <th>
-//           Name
-//         </th>
-//         <th>
-//           Link
-//         </th>
-//         <th>
-//           View
-//         </th>
-//         <th>
-//           Delete
-//         </th>
-//       </tr>
-//     </thead>
-//     <tbody>
-//       {urls.map(url =>
-//         <Url
-//           key={url.id}
-//           {...url}
-//           onDelete={() => deleteUrl(url.id)}
-//           id={url.id}
-//         />
-//       )}
-//     </tbody>
-//   </table>
-// )
-
 // UrlList.PropTypes = {
 //   urls: PropTypes.arrayOf(
 //     PropTypes.shape({
@@ -113,4 +82,3 @@ export default connect(
   mapStateToProps,
 )(UrlList)
 
-// export default UrlList;

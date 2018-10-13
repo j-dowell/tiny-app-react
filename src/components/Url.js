@@ -12,7 +12,7 @@ const Url = ({ name, url, id, onDelete }) => (
       {url}
     </td>
     <td>
-      <a href={url} target='_blank'>
+      <a href={url} target='_blank' rel="noopener noreferrer">
       <button>Visit</button></a>
     </td>
     {/* <td>

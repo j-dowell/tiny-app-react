@@ -1,4 +1,4 @@
-import { REGISTER_USER, REGISTER_USER_SUCCESS } from '../actions';
+import { REGISTER_USER_SUCCESS } from '../actions';
 import { LOGGING_IN, LOGGED_IN} from '../actions/index';
 
 const initialState = {

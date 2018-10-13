@@ -7,7 +7,6 @@ import * as serviceWorker from './serviceWorker';
 import reduxThunk from 'redux-thunk';
 import { AUTHENTICATED } from './actions';
 import logger from 'redux-logger'
-import {verifyUserToken} from './actions/index'
 
 const createStoreWithMiddleware = applyMiddleware(reduxThunk, logger)(createStore);
 const store = createStoreWithMiddleware(tinyApp);

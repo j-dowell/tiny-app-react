@@ -11,46 +11,49 @@ class UrlList extends Component {
   }
 
   render() {
-    const { error, loading, items } = this.props;
+    const { error, loading, items, usersLoading } = this.props;
 
     if (error) {
       return <div>Error! {error.message}</div>;
     }
 
-    if (loading) {
+    if (loading || usersLoading) {
       return <div>Loading...</div>;
     }
 
     return (
-
-      <table>
-    <thead>
-      <tr>
-        <th>
-          Name
-        </th>
-        <th>
-          Link
-        </th>
-        <th>
-          View
-        </th>
-        <th>
-          Delete
-        </th>
-      </tr>
-    </thead>
-    <tbody>
-      {items.map(item =>
-        <Url
-          key={item.url}
-          {...item}
-          // onDelete={() => deleteUrl(item.id)}
-          id={item.id}
-        />
-      )}
-    </tbody>
-  </table>
+      <React.Fragment>
+        {items ? (
+          <table>
+            <thead>
+              <tr>
+                <th>
+                  Name
+                </th>
+                <th>
+                  Link
+                </th>
+                <th>
+                  View
+                </th>
+                <th>
+                  Delete
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              {items.map(item =>
+                <Url
+                  key={item.url}
+                  {...item}
+                  // onDelete={() => deleteUrl(item.id)}
+                  id={item.id}
+                />
+              )}
+            </tbody>
+          </table>
+        ) : (<p>Make a short url!</p>)}
+      </React.Fragment>
     );
   }
 }
@@ -60,7 +63,8 @@ const mapStateToProps = state => {
     urls: state.urls,
     items: state.urls.items,
     loading: state.urls.loading,
-    error: state.urls.error
+    error: state.urls.error,
+    usersLoading: state.users.loading
   }
 }
 

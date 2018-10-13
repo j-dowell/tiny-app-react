@@ -45,6 +45,24 @@ async function doesUserExist(email) {
   }
 }
 
+const verifyToken = (token) => {
+  jwt.verify(token, key, function(err, decoded) {
+    if (err) {
+      console.log('Tried to verify token and failed')
+      let response = {
+        auth: false,
+        message: 'Failed to authenticate token.'
+      }
+      return response;
+    } else {
+      console.log('Verified Token', decoded.id)
+      return {
+        userID: decoded.id
+      }
+    }
+  })
+}
+
 const registerUser = async function(email, password, first_name, last_name) {
 const client = new MongoClient(url, { useNewUrlParser: true });
   try{
@@ -229,7 +247,7 @@ app.post('/api/register', (req, res) => {
 
 });
 
-async function addUrl(newUrl, name) {
+async function addUrl(newUrl, name, token) {
   const client = new MongoClient(url, { useNewUrlParser: true });
 
   try {
@@ -238,8 +256,8 @@ async function addUrl(newUrl, name) {
 
     const db = client.db(dbName);
     const col = db.collection('users');
-
-    const r = await col.updateOne({email:'test@gmail.com'}, {$push: {urls: {url:newUrl, name:name} }});
+    const userID = await verifyToken(token);
+    const r = await col.updateOne({_id:userID}, {$push: {urls: {url:newUrl, name:name} }});
     assert.equal(1, r.matchedCount);
     assert.equal(1, r.modifiedCount);
     return {urlAdded: true};

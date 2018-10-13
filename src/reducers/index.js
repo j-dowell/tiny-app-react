@@ -8,5 +8,5 @@ export default combineReducers({
   urls,
   form: formReducer,
   auth: authReducer,
-  user: userReducer,
+  users: userReducer,
 })

@@ -20,7 +20,7 @@ if(user) {
 }
 
 render(
-  <Root verifyUserToken={verifyUserToken} store={store} />,
+  <Root store={store} />,
   document.getElementById('root')
 )
 

@@ -24,10 +24,14 @@ export function addUrl(newUrl, name) {
   console.log('Trying to add URL')
   return function(dispatch) {
     dispatch(addUrlBegin(newUrl, name));
-    return axios.post(`/api/addUrl`, {newUrl, name})
+    const token = localStorage.getItem('user');
+    console.log('token', token)
+    return axios.post(`/api/addUrl`, {newUrl, name, token})
       .then(json => {
         console.log('posted url', json)
         dispatch(addUrlSuccess());
+      })
+      .then(res => {
         dispatch(userUrls());
       })
   }

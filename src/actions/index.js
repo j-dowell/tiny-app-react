@@ -17,6 +17,15 @@ export const FETCH_URLS_BEGIN   = 'FETCH_URLS_BEGIN';
 export const FETCH_URLS_SUCCESS = 'FETCH_URLS_SUCCESS';
 export const FETCH_URLS_FAILURE = 'FETCH_URLS_FAILURE';
 
+export const LOGGING_IN = 'LOGGING_IN';
+export const LOGGED_IN = 'LOGGED_IN';
+
+export const loggingIn = () => ({
+  type: LOGGING_IN
+})
+export const loggedIn = () => ({
+  type: LOGGED_IN
+})
 export const fetchUrlsBegin = () => ({
   type: FETCH_URLS_BEGIN
 });
@@ -32,10 +41,11 @@ export const fetchUrlsError = error => ({
 });
 
 export function userUrls() {
+  let userToken = localStorage.getItem('user');
+  console.log(userToken)
   console.log('made it to userUrls action function')
   return function(dispatch) {
     dispatch(fetchUrlsBegin());
-    let userToken = localStorage.getItem('user');
     console.log('about to get users urls, with token:', userToken);
     return axios.get(`/api/urlList/${userToken}`)
       .then(response => {
@@ -61,11 +71,13 @@ export function signInAction({ email, password }, history) {
           payload: 'Invalid email or password'
         });
       } else {
-        dispatch({ type: AUTHENTICATED });
         localStorage.setItem('user', res.data.token);
-        console.log(localStorage)
-        history.push('/urls');
       }
+    })
+    .then(res => {
+      dispatch({ type: AUTHENTICATED });
+      console.log(localStorage) 
+      history.push('/urls');
     })
   } 
 }
@@ -106,6 +118,7 @@ export function registerUser({email, password, first_name, last_name}, history) 
   console.log('history', history);  
   return function(dispatch) {
     console.log('history', history);
+    dispatch(loggingIn());
     return axios.post(`/api/register`, {email, password, first_name, last_name})
     .then(res => {
       if (res.data.user_added) {

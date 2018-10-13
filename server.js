@@ -5,6 +5,7 @@ const bodyParser = require('body-parser');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 // const ENV = process.env.ENV || "development";
+const assert = require('assert');
 
 const key = process.env.JWT_key;
 const mongoUser = process.env.MONGO_USER;
@@ -237,11 +238,11 @@ async function addUrl(newUrl, name) {
 
     const db = client.db(dbName);
     const col = db.collection('users');
-    let r;
 
-    r = await col.updateOne({email:'test@gmail.com'}, {$push: {urls: {url:newUrl, name:name} }});
-
-    console.log(r);
+    const r = await col.updateOne({email:'test@gmail.com'}, {$push: {urls: {url:newUrl, name:name} }});
+    assert.equal(1, r.matchedCount);
+    assert.equal(1, r.modifiedCount);
+    return {urlAdded: true};
   } catch (err) {
     console.log(err.stack);
   }
@@ -251,8 +252,10 @@ async function addUrl(newUrl, name) {
 
 app.post('/api/addUrl', (req, res) => {
   console.log('hit addurl api')
-  addUrl(req.body.newUrl, req.body.name).then(result => console.log(result));
-})
+  addUrl(req.body.newUrl, req.body.name).then(result => {
+    res.json(result);
+  })
+});
 
 
 const port = process.env.PORT || 3005;

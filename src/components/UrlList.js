@@ -43,7 +43,7 @@ class UrlList extends Component {
     <tbody>
       {items.map(item =>
         <Url
-          key={item.id}
+          key={item.url}
           {...item}
           // onDelete={() => deleteUrl(item.id)}
           id={item.id}

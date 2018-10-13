@@ -11,7 +11,6 @@ const AddUrl = ({dispatch}) => {
       <form
         onSubmit={e => {
           e.preventDefault()
-          // this.props.dispatch(addUrl(name.value, url.value))
           dispatch(addUrl(url.value, name.value))
           name.value = ''
           url.value = ''

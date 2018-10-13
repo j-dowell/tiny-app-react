@@ -32,6 +32,12 @@ const urls = (state = initialState, action) => {
         ...state,
         loading: true,
         error: null
+      };
+    case ADD_URL_SUCCESS:
+      return {
+        ...state,
+        loading:false,
+        error: null
       }
     case FETCH_URLS_BEGIN:
       // Mark the state as "loading" so we can show a spinner or something

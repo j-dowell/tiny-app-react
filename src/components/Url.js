@@ -15,16 +15,14 @@ const Url = ({ name, url, id, onDelete }) => (
       <a href={url} target='_blank'>
       <button>Visit</button></a>
     </td>
-    <td>
+    {/* <td>
       <button onClick={() => onDelete(id)}>Delete</button>
-    </td>
+    </td> */}
   </tr>
 )
 
 Url.propTypes = {
   url: PropTypes.string.isRequired,
-  id: PropTypes.number.isRequired,
-  onDelete: PropTypes.func.isRequired,
 }
 const mapStateToProps = state => {
   return {
@@ -32,14 +30,13 @@ const mapStateToProps = state => {
   }
 }
 
-const mapDispatchToProps = dispatch => {
-  // return {
-  //   onDelete: (id) =>
-  //     dispatch(deleteUrl(id))
-  // }
-}
+// const mapDispatchToProps = dispatch => {
+//   // return {
+//   //   onDelete: (id) =>
+//   //     dispatch(deleteUrl(id))
+//   // }
+// }
 
 export default connect(
-  mapStateToProps,
-  mapDispatchToProps
+  mapStateToProps
 )(Url)

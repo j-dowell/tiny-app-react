@@ -4,23 +4,26 @@ const app = express();
 const bodyParser = require('body-parser');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
-// const ENV = process.env.ENV || "development";
 const assert = require('assert');
-
-const key = process.env.JWT_key;
-const mongoUser = process.env.MONGO_USER;
-const mongoPw = process.env.MONGO_PW
 const mongodb = require('mongodb');
 const MongoClient = require('mongodb').MongoClient;
+
+// JWT key
+const key = process.env.JWT_key;
+
+// Mongo setup
+const mongoUser = process.env.MONGO_USER;
+const mongoPw = process.env.MONGO_PW
 const url = `mongodb+srv://${mongoUser}:${mongoPw}@cluster0-btgde.mongodb.net/test?retryWrites=true`;
 const dbName = 'tiny-app';
 
+// Middleware
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 async function hashPassword(password) {
   const saltRounds = 10;
-  const hash = await bcrypt.hash(password, saltRounds)
+  const hash = await bcrypt.hash(password, saltRounds);
   return hash;
 }
 
@@ -32,8 +35,8 @@ async function doesUserExist(email) {
       .catch(err => console.log(`Couldn't connect`, err));
     const db = client.db(dbName);
     const user = await db.collection('users')
-      .findOne({email: email})
-      .catch(err => console.log('error retrieving user', err));
+      .findOne({ email: email })
+      .catch(err => console.log('Error retrieving user', err));
     if (user) {
       return true;
     } else {
@@ -51,37 +54,21 @@ const verifyToken = (token) => {
   return {
     userID: decoded.id
   }
-  // jwt.verify(token, key, function(err, decoded) {
-  //   if (err) {
-  //     console.log('Tried to verify token and failed')
-  //     console.log('Tried to verify token and failed', err.stack)
-  //     let response = {
-  //       auth: false,
-  //       message: 'Failed to authenticate token.'
-  //     }
-  //     return response;
-  //   } else {
-  //     console.log('Verified Token', decoded.id)
-  //     return {
-  //       userID: decoded.id
-  //     }
-  //   }
-  // })
 }
 
 const registerUser = async function(email, password, first_name, last_name) {
-const client = new MongoClient(url, { useNewUrlParser: true });
-  try{
+  const client = new MongoClient(url, { useNewUrlParser: true });
+  try {
     await client
       .connect()
       .catch(err => console.log(`Couldn't connect`, err));
-    console.log('connected to database');
+    console.log('Connected to database');
     const db = client.db(dbName);
     const password_digest = await hashPassword(password);
     const userExists = await doesUserExist(email);
     if (userExists) {
       console.log('Email already exists!');
-      return {auth:false};
+      return { auth:false };
     } else {
       const newUserObject = await db.collection('users')
         .insertOne({
@@ -116,7 +103,7 @@ const client = new MongoClient(url, { useNewUrlParser: true });
     const col = db.collection('users');
     // Searching for user by email
     const user = await col
-      .findOne({email: email})
+      .findOne({ email: email })
       .catch(err => console.log(`Error finding user`, err))
     // If user exists in database
     if (user) {
@@ -149,24 +136,6 @@ const client = new MongoClient(url, { useNewUrlParser: true });
   }
 }
 
-
-// app.get(`/token/:id`, (req, res) => {
-//   console.log('api token')
-//   jwt.verify(req.params.id, key, function(err, decoded) {
-//     if (err) {
-//       console.log('Tried to verify token and failed')
-//       let response = {
-//         auth: false,
-//         message: 'Failed to authenticate token.'
-//       }
-//       res.json(response)
-//     } else {
-//       console.log('Verified Token', decoded.id)
-//       res.json({auth:true})
-//     }
-//   })
-// });
-
 const findUserUrlList = async function(id) {
   const client = new MongoClient(url, { useNewUrlParser: true });
   const userID = new mongodb.ObjectID(id);
@@ -187,16 +156,12 @@ const findUserUrlList = async function(id) {
     console.log(err.stack);
   }
 }
+
 app.get('/api/urlList/:userToken', (req, res) => {
   console.log('Trying to find urls');
-  console.log('hello', req.params.userToken)
   jwt.verify(req.params.userToken, key, function(err, decoded) {
-    console.log('deconded', decoded)
-    console.log('deconded', decoded.id)
     if (err) {
-      console.log(req.params.userToken)
-      console.log('token err', err);
-      console.log('Tried to verify token and failed')
+      console.log('Tried to verify token and failed', err)
       let response = {
         auth: false,
         message: 'Failed to authenticate token.'
@@ -216,76 +181,74 @@ app.get('/api/urlList/:userToken', (req, res) => {
 
 app.post('/api/login', (req, res) => {
   console.log('making login request')
-  console.log('req body', req.body)
-
   verifyUserLogin(req.body.email, req.body.password)
     .then((result) => {
-      console.log('verification result', result)
       if (result.auth === true) {
         const token = jwt.sign({ id: result.id }, key, {
           expiresIn: 86400 // expires in 24 hours
         });
-        console.log('Token:', token)
-        res.json({auth:true, token:token})
+        console.log('Token given:', token)
+        res.json({ 
+          auth:true,
+          token:token
+        })
       } else {
         console.log('No token given, auth false')
-        res.json({auth:false})
+        res.json({ auth: false })
       }
     })
   .catch(err => console.log(err));
 });
 
 app.post('/api/register', (req, res) => {
-  console.log('registering user');
+  console.log('Registering user');
+  
   const { email, password, first_name, last_name } = req.body;
-  console.log(email, password)
-  registerUser(email, password, first_name, last_name)
-  .then(result => {
-    if (result.auth) {
-    console.log('result', result)
-    const token = jwt.sign({ id: result._id }, key, {
-      expiresIn: 86400 // expires in 24 hours
-    });
-    console.log('Token:', token)
-    res.json({user_added:true, token:token})
-  } else {
-    res.json({user_added:false})
-  }
-  })
-  .catch(err => console.log(err))
 
+  registerUser(email, password, first_name, last_name)
+    .then(result => {
+      if (result.auth) {
+        const token = jwt.sign({ id: result._id }, key, {
+          expiresIn: 86400 // expires in 24 hours
+        });
+        console.log('Token given:', token)
+        res.json({
+          user_added: true,
+          token: token
+        })
+    } else {
+      res.json({ user_added: false })
+    }
+    })
+    .catch(err => console.log(err))
 });
 
 async function addUrl(newUrl, name, token) {
   const client = new MongoClient(url, { useNewUrlParser: true });
+  const {userID} = verifyToken(token);
+  const userObjectID = new mongodb.ObjectID(userID);
+
   try {
     await client.connect();
     console.log("Connected correctly to server");
     const db = client.db(dbName);
     const col = db.collection('users');
-    console.log('addurl token', token)
-    const {userID} = verifyToken(token);
-    console.log('id', userID)
-    const userObjectID = new mongodb.ObjectID(userID)
-    const r = await col.updateOne({_id:userObjectID}, {$push: {urls: {url:newUrl, name:name} }});
-    console.log('r', r)
-    // assert.equal(1, r.matchedCount);
-    assert.equal(1, r.modifiedCount);
-    return {urlAdded: true};
+    const result = await col.updateOne({_id:userObjectID}, {$push: {urls: {url:newUrl, name:name} }});
+    console.log('Add URL result', result);
+    assert.equal(1, result.matchedCount);
+    assert.equal(1, result.modifiedCount);
+    return { urlAdded: true };
   } catch (err) {
     console.log(err.stack);
   }
 }
 
-
-
 app.post('/api/addUrl', (req, res) => {
-  console.log('hit addurl api')
+  console.log('Attempting to add url');
   addUrl(req.body.newUrl, req.body.name, req.body.token).then(result => {
     res.json(result);
   })
 });
-
 
 const port = process.env.PORT || 3005;
 app.listen(port);

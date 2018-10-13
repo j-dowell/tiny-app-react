@@ -3,13 +3,18 @@ import { Field, reduxForm } from 'redux-form';
 import { addUrl } from '../actions/addUrl'
 import { connect } from 'react-redux';
 
+const urlRegex = /^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$/i
+
 const validate = values => {
   const errors = {}
   if (!values.url) {
     errors.url = 'Required'
-  } else if (!/^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$/i.test(values.url)) {
+  } else if (!urlRegex.test(values.url)) {
     errors.url = 'Invalid url'
   }
+  if(!values.name) {
+    errors.name = "Required"
+  } 
   return errors
 }
 const renderField = ({

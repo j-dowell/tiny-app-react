@@ -12,7 +12,7 @@ class UrlList extends Component {
 
   render() {
     const { error, loading, items, usersLoading } = this.props;
-
+    const httpRegex = /^(http:|https:)/;
     if (error) {
       return <div>Error! {error.message}</div>;
     }
@@ -45,7 +45,8 @@ class UrlList extends Component {
               {items.map(item =>
                 <Url
                   key={item.url}
-                  {...item}
+                  name={item.name}
+                  url={(httpRegex.test(item.url)) ? (item.url) : ('https://' + item.url) }
                   // onDelete={() => deleteUrl(item.id)}
                   id={item.id}
                 />

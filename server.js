@@ -49,6 +49,7 @@ const verifyToken = (token) => {
   jwt.verify(token, key, function(err, decoded) {
     if (err) {
       console.log('Tried to verify token and failed')
+      console.log('Tried to verify token and failed', err.stack)
       let response = {
         auth: false,
         message: 'Failed to authenticate token.'
@@ -72,7 +73,6 @@ const client = new MongoClient(url, { useNewUrlParser: true });
     console.log('connected to database');
     const db = client.db(dbName);
     const password_digest = await hashPassword(password);
-    console.log(password_digest);
     const userExists = await doesUserExist(email);
     if (userExists) {
       console.log('Email already exists!');
@@ -84,13 +84,14 @@ const client = new MongoClient(url, { useNewUrlParser: true });
           last_name,
           password_digest,
           email,
-          urls: ['https://www.example.org']
+          urls: []
         })
         .then(response => {
+          console.log(response.ops[0])
           return response.ops[0] // return user object after registering
         })
         .catch(err => console.log(`Error adding user`, err));
-      return {newUserObject, auth:true};
+      return {...newUserObject, auth:true};
     }
     } catch(err) {
       console.log(err.stack);
@@ -144,22 +145,22 @@ const client = new MongoClient(url, { useNewUrlParser: true });
 }
 
 
-app.get(`/token/:id`, (req, res) => {
-  console.log('api token')
-  jwt.verify(req.params.id, key, function(err, decoded) {
-    if (err) {
-      console.log('Tried to verify token and failed')
-      let response = {
-        auth: false,
-        message: 'Failed to authenticate token.'
-      }
-      res.json(response)
-    } else {
-      console.log('Verified Token', decoded.id)
-      res.json({auth:true})
-    }
-  })
-});
+// app.get(`/token/:id`, (req, res) => {
+//   console.log('api token')
+//   jwt.verify(req.params.id, key, function(err, decoded) {
+//     if (err) {
+//       console.log('Tried to verify token and failed')
+//       let response = {
+//         auth: false,
+//         message: 'Failed to authenticate token.'
+//       }
+//       res.json(response)
+//     } else {
+//       console.log('Verified Token', decoded.id)
+//       res.json({auth:true})
+//     }
+//   })
+// });
 
 const findUserUrlList = async function(id) {
   const client = new MongoClient(url, { useNewUrlParser: true });
@@ -183,7 +184,10 @@ const findUserUrlList = async function(id) {
 }
 app.get('/api/urlList/:userToken', (req, res) => {
   console.log('Trying to find urls');
+  console.log('hello', req.params.userToken)
   jwt.verify(req.params.userToken, key, function(err, decoded) {
+    console.log('deconded', decoded)
+    console.log('deconded', decoded.id)
     if (err) {
       console.log(req.params.userToken)
       console.log('token err', err);
@@ -196,10 +200,10 @@ app.get('/api/urlList/:userToken', (req, res) => {
     } else {
       console.log('Verified Token', decoded.id)
       findUserUrlList(decoded.id)
-      .then(response => {
-        console.log(response);
-        res.json(response)
-        })
+        .then(response => {
+          console.log(response);
+          res.json(response)
+          })
         .catch(err => console.log(err));
     }
   })
@@ -253,7 +257,6 @@ async function addUrl(newUrl, name, token) {
   try {
     await client.connect();
     console.log("Connected correctly to server");
-
     const db = client.db(dbName);
     const col = db.collection('users');
     const userID = await verifyToken(token);
@@ -270,7 +273,7 @@ async function addUrl(newUrl, name, token) {
 
 app.post('/api/addUrl', (req, res) => {
   console.log('hit addurl api')
-  addUrl(req.body.newUrl, req.body.name).then(result => {
+  addUrl(req.body.newUrl, req.body.name, req.body.token).then(result => {
     res.json(result);
   })
 });

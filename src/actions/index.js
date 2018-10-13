@@ -49,8 +49,8 @@ export function userUrls() {
     console.log('about to get users urls, with token:', userToken);
     return axios.get(`/api/urlList/${userToken}`)
       .then(response => {
-        dispatch(fetchUrlsSuccess(response.data.urls));
         console.log(response.data.urls);
+        dispatch(fetchUrlsSuccess(response.data.urls));
         return response.data.urls;
       })
   }
@@ -62,6 +62,7 @@ export const AUTHENTICATION_ERROR = 'authentication_error';
 export function signInAction({ email, password }, history) {
 
   return function (dispatch) {
+    dispatch(loggingIn());
     return axios.post(`/api/login`, {email, password})
     .then(res => {
       console.log(res);
@@ -75,6 +76,7 @@ export function signInAction({ email, password }, history) {
       }
     })
     .then(res => {
+      dispatch(loggedIn());
       dispatch({ type: AUTHENTICATED });
       console.log(localStorage) 
       history.push('/urls');
@@ -115,24 +117,25 @@ export const REGISTER_USER = 'REGISTER_USER';
 export const REGISTER_USER_SUCCESS = 'REGISTER_USER_SUCCESS';
 
 export function registerUser({email, password, first_name, last_name}, history) {
-  console.log('history', history);  
   return function(dispatch) {
-    console.log('history', history);
     dispatch(loggingIn());
     return axios.post(`/api/register`, {email, password, first_name, last_name})
     .then(res => {
       if (res.data.user_added) {
         localStorage.setItem('user', res.data.token);
-        dispatch({
-          type: AUTHENTICATED
-        })
-        history.push('/urls');
       } else {
         dispatch ({
           type: AUTHENTICATION_ERROR,
           payload: 'Email already exists!'
         })
       }
+    })
+    .then(res => {
+      dispatch(loggedIn());
+      dispatch({
+        type: AUTHENTICATED
+      })
+      history.push('/urls');
     })
   }
 }

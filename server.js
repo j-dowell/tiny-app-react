@@ -46,22 +46,27 @@ async function doesUserExist(email) {
 }
 
 const verifyToken = (token) => {
-  jwt.verify(token, key, function(err, decoded) {
-    if (err) {
-      console.log('Tried to verify token and failed')
-      console.log('Tried to verify token and failed', err.stack)
-      let response = {
-        auth: false,
-        message: 'Failed to authenticate token.'
-      }
-      return response;
-    } else {
-      console.log('Verified Token', decoded.id)
-      return {
-        userID: decoded.id
-      }
-    }
-  })
+  const decoded = jwt.verify(token, key);
+  console.log(decoded);
+  return {
+    userID: decoded.id
+  }
+  // jwt.verify(token, key, function(err, decoded) {
+  //   if (err) {
+  //     console.log('Tried to verify token and failed')
+  //     console.log('Tried to verify token and failed', err.stack)
+  //     let response = {
+  //       auth: false,
+  //       message: 'Failed to authenticate token.'
+  //     }
+  //     return response;
+  //   } else {
+  //     console.log('Verified Token', decoded.id)
+  //     return {
+  //       userID: decoded.id
+  //     }
+  //   }
+  // })
 }
 
 const registerUser = async function(email, password, first_name, last_name) {
@@ -164,7 +169,7 @@ const client = new MongoClient(url, { useNewUrlParser: true });
 
 const findUserUrlList = async function(id) {
   const client = new MongoClient(url, { useNewUrlParser: true });
-  const userID = new mongodb.ObjectID(id)
+  const userID = new mongodb.ObjectID(id);
   try {
     await client
       .connect()
@@ -253,15 +258,18 @@ app.post('/api/register', (req, res) => {
 
 async function addUrl(newUrl, name, token) {
   const client = new MongoClient(url, { useNewUrlParser: true });
-
   try {
     await client.connect();
     console.log("Connected correctly to server");
     const db = client.db(dbName);
     const col = db.collection('users');
-    const userID = await verifyToken(token);
-    const r = await col.updateOne({_id:userID}, {$push: {urls: {url:newUrl, name:name} }});
-    assert.equal(1, r.matchedCount);
+    console.log('addurl token', token)
+    const {userID} = verifyToken(token);
+    console.log('id', userID)
+    const userObjectID = new mongodb.ObjectID(userID)
+    const r = await col.updateOne({_id:userObjectID}, {$push: {urls: {url:newUrl, name:name} }});
+    console.log('r', r)
+    // assert.equal(1, r.matchedCount);
     assert.equal(1, r.modifiedCount);
     return {urlAdded: true};
   } catch (err) {

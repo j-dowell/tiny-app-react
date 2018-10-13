@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import { deleteUrl } from '../actions'
+// import { deleteUrl } from '../actions'
 import UrlList from '../components/UrlList'
 
 const mapStateToProps = state => ({
@@ -7,7 +7,7 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-  deleteUrl: id => dispatch(deleteUrl(id))
+  // deleteUrl: id => dispatch(deleteUrl(id))
 })
 
 export default connect(

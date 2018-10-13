@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import AddUrl from '../containers/AddUrl';
+import AddNewUrl from './Add';
 import UrlListContainer from '../containers/UrlListContainer';
 
 class App extends Component {
@@ -7,7 +7,7 @@ class App extends Component {
     return (
       <div>
         <p>TinyURL</p>
-        <AddUrl/>
+        <AddNewUrl/>
         <UrlListContainer/>
       </div>
     );

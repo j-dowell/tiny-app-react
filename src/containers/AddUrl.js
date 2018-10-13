@@ -1,8 +1,17 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { addUrl } from '../actions'
+import { addUrl } from '../actions/addUrl'
 
-const AddUrl = ({ dispatch }) => {
+const urlValidatorRegex = /^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$/
+
+function validateForm(url) {
+  if (!urlValidatorRegex.test(url)) {
+      alert("not proper url");
+      return false;
+  }
+}
+
+const AddUrl = ({dispatch}) => {
   let name
   let url
   return (
@@ -10,13 +19,14 @@ const AddUrl = ({ dispatch }) => {
       <form
         onSubmit={e => {
           e.preventDefault()
-          dispatch(addUrl(name.value, url.value))
+          validateForm(url.value)
+          dispatch(addUrl(url.value, name.value))
           name.value = ''
           url.value = ''
         }}
       >
-        <input ref={node => name = node} />
-        <input ref={node => url = node} />
+        <input required ref={node => name = node} />
+        <input required ref={node => url = node} />
         <button type="submit">
           Add URL
         </button>
@@ -25,4 +35,16 @@ const AddUrl = ({ dispatch }) => {
   )
 }
 
+// const mapStateToProps = state => {
+//   return {
+//     store: state.store
+//   }
+// }
+// const mapDispatchToProps = dispatch => {
+//   return {
+//     submitUrl: (url, name) => {
+//       dispatch(addUrl(url, name))
+//     }
+//   }
+// }
 export default connect()(AddUrl)

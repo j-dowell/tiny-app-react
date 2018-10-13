@@ -7,6 +7,7 @@ const bcrypt = require('bcrypt');
 const assert = require('assert');
 const mongodb = require('mongodb');
 const MongoClient = require('mongodb').MongoClient;
+const hashPassword = require('./helpers/bcrypt');
 
 // JWT key
 const key = process.env.JWT_key;
@@ -21,11 +22,6 @@ const dbName = 'tiny-app';
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-async function hashPassword(password) {
-  const saltRounds = 10;
-  const hash = await bcrypt.hash(password, saltRounds);
-  return hash;
-}
 
 async function doesUserExist(email) {
   const client = new MongoClient(url, { useNewUrlParser: true });

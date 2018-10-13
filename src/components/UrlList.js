@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+// import PropTypes from 'prop-types';
 import Url from './Url';
 import { userUrls} from '../actions'
 import { connect } from 'react-redux'

@@ -1,15 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { addUrl } from '../actions/addUrl'
-
-const urlValidatorRegex = /^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$/
-
-function validateForm(url) {
-  if (!urlValidatorRegex.test(url)) {
-      alert("not proper url");
-      return false;
-  }
-}
+import { reset } from 'redux-form';
 
 const AddUrl = ({dispatch}) => {
   let name
@@ -19,10 +11,8 @@ const AddUrl = ({dispatch}) => {
       <form
         onSubmit={e => {
           e.preventDefault()
-          validateForm(url.value)
           dispatch(addUrl(url.value, name.value))
-          name.value = ''
-          url.value = ''
+          dispatch(reset('addUrl'))
         }}
       >
         <input required ref={node => name = node} />

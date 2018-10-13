@@ -8,4 +8,4 @@ function randomIdGenerator() {
   return text;
 }
 
-export { randomIdGenerator };
+module.exports = randomIdGenerator

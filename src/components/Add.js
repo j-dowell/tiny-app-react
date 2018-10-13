@@ -85,7 +85,7 @@ function mapStateToProps(state) {
 
 
 const reduxFormSignin = reduxForm({
-  form: 'register',
+  form: 'addUrl',
   validate
 })(AddNewUrl);
 

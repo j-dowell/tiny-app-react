@@ -1,5 +1,8 @@
 import axios from 'axios';
 import {userUrls} from './index'
+import {reset} from 'redux-form';
+
+
 export const ADD_URL_BEGIN   = 'ADD_URL_BEGIN';
 export const ADD_URL_SUCCESS = 'ADD_URL_SUCCESS';
 export const ADD_URL_FAILURE = 'FETCH_URLS_FAILURE';
@@ -32,6 +35,7 @@ export function addUrl(newUrl, name) {
         dispatch(addUrlSuccess());
       })
       .then(res => {
+        dispatch(reset('addUrl'));
         dispatch(userUrls());
       })
   }

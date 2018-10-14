@@ -13,6 +13,7 @@ export const theme = createMuiTheme({
       fontWeight: 700,
       fontSize: 50,
     },
+    
 
   },
   palette: {

@@ -9,14 +9,15 @@ class Navbar extends Component {
     if (this.props.authenticated) {
       return [
       <React.Fragment key="container">
-          <Link to="/urls">Urls</Link><br/>
-          <SignOut signOutAction={signOutAction}/>
-        </React.Fragment>
+        <Link to='/urls'>View your links</Link>
+        <Link to='/addurl'>Shorten a new link</Link>
+        <SignOut signOutAction={signOutAction}/>
+      </React.Fragment>
       ];
     }
     return [
       <li key="signin"><Link to="/signin">Sign in</Link></li>,
-      <li key="signup"><Link to="/signup">Sign up</Link></li>
+      <li key="register"><Link to="/register">Register</Link></li>
     ];
   }
 
@@ -24,7 +25,6 @@ class Navbar extends Component {
     return (
       <nav className="navbar">
         <div className="container">
-          <Link to="/"><span className="brand">Home</span></Link>
           <ul>
             {this.navbarLinks()}
           </ul>

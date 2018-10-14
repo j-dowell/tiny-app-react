@@ -1,24 +1,21 @@
 import React, { Component } from 'react';
-import AddNewUrl from './Add';
+import AddNewUrl from '../components/Add';
 import UrlListContainer from '../containers/UrlListContainer';
-import NavBar from './NavBar';
-import UrlInfo from './UrlInfo';
+import UrlInfo from '../components/UrlInfo';
 import { Link } from 'react-router-dom';
-import TemporaryDrawer from './material/Drawer';
+import TemporaryDrawer from '../components/material/Drawer';
 
 class App extends Component {
   render() {
     return (
       <div>
-        <h1 style={{textAlign:'center'}}>TinyURL</h1>
-        <NavBar/>
-        <TemporaryDrawer/>
-        {/* <NavBar/>
-        <AddNewUrl/>
+      <TemporaryDrawer/>
+        <h1 style={{textAlign:'center'}}>Your links</h1>
+        <Link to='/addurl'>Shorten a new link</Link>
         <div style={{display:'flex'}}>
           <UrlListContainer/>
           <UrlInfo/>
-        </div> */}
+        </div>
       </div>
     );
   }

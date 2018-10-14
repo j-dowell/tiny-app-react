@@ -9,8 +9,10 @@ const UrlInfo = ({ url }) => (
   <div>
     <div>
       <h1>{url.name}</h1>
+      <h3>{url.url}</h3>
       <h3>Created {new Date(url.date_added).toLocaleString()}</h3>
-      <h3>{url.shortURL}</h3><button>Copy</button><button>Share</button><button>Edit</button><button>Delete</button>
+      <h3>/{url.shortURL}</h3>
+      <button>Copy</button><button>Share</button><button>Edit</button><button>Delete</button>
     </div>
     <div>
       <p>Times clicked:</p>

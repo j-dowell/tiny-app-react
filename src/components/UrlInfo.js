@@ -50,7 +50,7 @@ class UrlInfo extends Component {
               in={this.state.clicked}
               timeout={1000}
             >
-              <p>Copied to clipboard!</p>
+              <Typography>Copied to clipboard!</Typography>
             </Fade>
             <Typography>Times clicked:</Typography>
             <Typography>Locations</Typography>

@@ -12,6 +12,7 @@ import Register from './Register';
 import UrlPageContainer from '../containers/UrlPageContainer';
 import AddNewUrl from './Add';
 import AddUrlPage from '../containers/AddUrlPage';
+import Redirecter from './LongUrlRedirecter';
 
 const Root = ({ store }) => (
   <Provider store={store}>
@@ -22,6 +23,7 @@ const Root = ({ store }) => (
         <Route exact path="/urls" component={requireAuth(UrlPageContainer)} />
         <Route exact path='/addurl' component={requireAuth(AddUrlPage)} />
         <Route exact path="/" component={noRequireAuth(App)} />
+        <Route path="/:shortUrl" component={Redirecter}/>
       </Switch>
     </Router>
   </Provider>

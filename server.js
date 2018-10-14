@@ -257,6 +257,35 @@ app.post('/api/addUrl', (req, res) => {
   })
 });
 
+async function getLongUrl(shortUrl) {
+  const client = new MongoClient(url, { useNewUrlParser: true });
+  try {
+    await client
+      .connect()
+      .catch(err => console.log(`Couldn't connect`, err));
+    const db = client.db(dbName);
+    const link = await db.collection('links')
+      .findOne({ shortUrl: shortUrl })
+      .catch(err => console.log('Error retrieving link', err));
+    if (link) {
+      return link; 
+    } else {
+      return {};
+    }
+  }
+  catch(err) {
+    console.log(err.stack);
+  }
+} 
+
+app.get('/shortUrl/:shortUrl', (req, res) => {
+  getLongUrl(req.params.shortUrl)
+    .then(result => {
+      console.log(result)
+      res.json(result);
+    })
+})
+
 const port = process.env.PORT || 3005;
 app.listen(port);
 

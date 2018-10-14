@@ -1,8 +1,21 @@
 import React, { Component } from 'react';
 // import PropTypes from 'prop-types';
 import Url from './Url';
-import { userUrls} from '../actions'
+import { userUrls } from '../actions'
+import { viewUrl } from '../actions/viewUrlInfo'
 import { connect } from 'react-redux'
+import Button from '@material-ui/core/Button'
+import UrlMaterialList from '../components/material/UrlMaterialList'
+
+const singleUrlContainer = {
+
+}
+
+const urlListContainer = {
+  overflow: 'scroll',
+  height: '-webkit-fill-available',
+  width:'20%'
+}
 
 class UrlList extends Component {
   componentDidMount() {
@@ -24,39 +37,22 @@ class UrlList extends Component {
     return (
       <React.Fragment>
         {items ? (
-          <table>
-            <thead>
-              <tr>
-                <th>
-                  Name
-                </th>
-                <th>
-                  Link
-                </th>
-                <th>
-                  Date Created
-                </th>
-                <th>
-                  View
-                </th>
-                <th>
-                  Delete
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              {items.map(item =>
-                <Url
-                  key={item.url}
-                  name={item.name}
-                  date={item.date_added}
-                  url={(httpRegex.test(item.url)) ? (item.url) : ('https://' + item.url) }
-                  // onDelete={() => deleteUrl(item.id)}
-                  id={item.id}
-                />
-              )}
-            </tbody>
-          </table>
+          <div style={urlListContainer}>
+          {items.map(item =>
+          <div style={singleUrlContainer}>
+          <UrlMaterialList
+              key={item.url}
+              name={item.name}
+              date={item.date_added}
+              shortUrl={item.shortURL}
+              url={(httpRegex.test(item.url)) ? (item.url) : ('https://' + item.url) }
+              // onDelete={() => deleteUrl(item.id)}
+              id={item.id}
+              item={item}
+          />
+            </div>
+          )}
+          </div>
         ) : (<p>Make a short url!</p>)}
       </React.Fragment>
     );

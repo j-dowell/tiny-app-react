@@ -38,7 +38,7 @@ const renderField = ({
 class AddNewUrl extends Component {
   submit = (values) => { 
     const { url, name } = values;
-    this.props.addUrl(url, name);
+    this.props.addUrl(url, name, this.props.history);
   }
 
   errorMessage() {

@@ -9,6 +9,9 @@ import requireAuth from './hoc/require_auth';
 import noRequireAuth from './hoc/no_require_auth';
 import { connect } from 'react-redux'
 import Register from './Register';
+import UrlPageContainer from '../containers/UrlPageContainer';
+import AddNewUrl from './Add';
+import AddUrlPage from '../containers/AddUrlPage';
 
 const Root = ({ store }) => (
   <Provider store={store}>
@@ -16,8 +19,9 @@ const Root = ({ store }) => (
       <Switch>
         <Route exact path="/signin" component={noRequireAuth(SignIn)} />
         <Route exact path="/register" component={noRequireAuth(Register)}/>
-        <Route exact path="/urls" component={requireAuth(App)} />
-        <Route exact path="/" component={requireAuth(NavBar)} />
+        <Route exact path="/urls" component={requireAuth(UrlPageContainer)} />
+        <Route exact path='/addurl' component={requireAuth(AddUrlPage)} />
+        <Route exact path="/" component={noRequireAuth(App)} />
       </Switch>
     </Router>
   </Provider>

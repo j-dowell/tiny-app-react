@@ -79,7 +79,7 @@ export function signInAction({ email, password }, history) {
       dispatch(loggedIn());
       dispatch({ type: AUTHENTICATED });
       console.log(localStorage) 
-      history.push('/urls');
+      history.push('/');
     })
   } 
 }
@@ -135,7 +135,7 @@ export function registerUser({email, password, first_name, last_name}, history) 
       dispatch({
         type: AUTHENTICATED
       })
-      history.push('/urls');
+      history.push('/');
     })
   }
 }

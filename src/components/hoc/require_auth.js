@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { MuiThemeProvider } from '@material-ui/core/styles';
+import { theme } from './theme';
 
 export default function (ComposedComponent) {
   class Authentication extends Component {
@@ -23,10 +25,12 @@ export default function (ComposedComponent) {
     render() {
       return (
         <div>
-          {this.props.authenticated ? 
-            <ComposedComponent {...this.props} />
+          {this.props.authenticated ?
+            (<MuiThemeProvider theme={theme}>
+              <ComposedComponent {...this.props} />
+            </MuiThemeProvider>)
           :
-            <p>unauthorized</p>}
+            (<p>unauthorized</p>)}
         </div>
       )
     }

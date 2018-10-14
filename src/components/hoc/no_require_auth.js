@@ -1,18 +1,22 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { MuiThemeProvider } from '@material-ui/core/styles';
+import {theme} from './theme';
 
 export default function (ComposedComponent) {
+
   class NotAuthentication extends Component {
+    
     componentWillMount() {
       if (this.props.authenticated && !this.props.userLoading) {
-        this.props.history.push('/urls');
+        // this.props.history.push('/urls');
       }
     }
 
     componentWillUpdate(nextProps) {
       if (nextProps.authenticated && !nextProps.userLoading) {
-        this.props.history.push('/urls');
+        // this.props.history.push('/urls');
       }
     }
 
@@ -21,7 +25,11 @@ export default function (ComposedComponent) {
     }
 
     render() {
-      return <ComposedComponent {...this.props} />;
+      return (
+        <MuiThemeProvider theme={theme}>
+          <ComposedComponent {...this.props} />
+        </MuiThemeProvider>
+      )
     }
   }
 

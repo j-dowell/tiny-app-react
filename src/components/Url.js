@@ -1,45 +1,42 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import { connect } from 'react-redux'
-// import {deleteUrl} from '../actions'
+// import React, { Component } from 'react'
+// import PropTypes from 'prop-types'
+// import { connect } from 'react-redux'
+// // import {deleteUrl} from '../actions'
+// import Typography from '@material-ui/core/Typography'
 
-const Url = ({ name, url, id, onDelete, date }) => (
-  <tr>
-    <td>
-      { name }
-    </td>
-    <td>
-      {url}
-    </td>
-    <td>
-      {new Date(date).toLocaleString()}
-    </td>
-    <td>
-      <a href={url} target='_blank' rel="noopener noreferrer">
-      <button>Visit</button></a>
-    </td>
-    {/* <td>
-      <button onClick={() => onDelete(id)}>Delete</button>
-    </td> */}
-  </tr>
-)
+// class Url extends Component {
+//   constructor(props) {
+//     super(props);
+//   }
 
-Url.propTypes = {
-  url: PropTypes.string.isRequired,
-}
-const mapStateToProps = state => {
-  return {
-    urls: state.urls
-  }
-}
-
-// const mapDispatchToProps = dispatch => {
-//   // return {
-//   //   onDelete: (id) =>
-//   //     dispatch(deleteUrl(id))
-//   // }
+  
+//   render() {
+    
+//     return (
+//       <div>
+//         <Typography variant="h4">{name}</Typography>
+//         <Typography variant="h5">{dateConverted}</Typography>
+//       </div>
+//     )
+//   }
 // }
 
-export default connect(
-  mapStateToProps
-)(Url)
+// Url.propTypes = {
+//   url: PropTypes.string.isRequired,
+// }
+// const mapStateToProps = state => {
+//   return {
+//     urls: state.urls
+//   }
+// }
+
+// // const mapDispatchToProps = dispatch => {
+// //   // return {
+// //   //   onDelete: (id) =>
+// //   //     dispatch(deleteUrl(id))
+// //   // }
+// // }
+
+// export default connect(
+//   mapStateToProps
+// )(Url)

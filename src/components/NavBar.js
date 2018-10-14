@@ -9,7 +9,7 @@ class Navbar extends Component {
     if (this.props.authenticated) {
       return [
       <React.Fragment key="container">
-        <li key="secret"><Link to="/urls">Urls</Link></li>
+          <Link to="/urls">Urls</Link><br/>
           <SignOut signOutAction={signOutAction}/>
         </React.Fragment>
       ];

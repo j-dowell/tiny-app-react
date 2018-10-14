@@ -24,39 +24,19 @@ class UrlList extends Component {
     return (
       <React.Fragment>
         {items ? (
-          <table>
-            <thead>
-              <tr>
-                <th>
-                  Name
-                </th>
-                <th>
-                  Link
-                </th>
-                <th>
-                  Date Created
-                </th>
-                <th>
-                  View
-                </th>
-                <th>
-                  Delete
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              {items.map(item =>
-                <Url
-                  key={item.url}
-                  name={item.name}
-                  date={item.date_added}
-                  url={(httpRegex.test(item.url)) ? (item.url) : ('https://' + item.url) }
-                  // onDelete={() => deleteUrl(item.id)}
-                  id={item.id}
-                />
-              )}
-            </tbody>
-          </table>
+          <div>
+          {items.map(item =>
+            <Url
+              key={item.url}
+              name={item.name}
+              date={item.date_added}
+              shortUrl={item.shortURL}
+              url={(httpRegex.test(item.url)) ? (item.url) : ('https://' + item.url) }
+              // onDelete={() => deleteUrl(item.id)}
+              id={item.id}
+            />
+          )}
+          </div>
         ) : (<p>Make a short url!</p>)}
       </React.Fragment>
     );

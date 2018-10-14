@@ -23,7 +23,7 @@ export const addUrlError = error => ({
   payload: { error }
 });
 
-export function addUrl(newUrl, name) {
+export function addUrl(newUrl, name, history) {
   console.log('Trying to add URL')
   return function(dispatch) {
     dispatch(addUrlBegin(newUrl, name));
@@ -34,9 +34,10 @@ export function addUrl(newUrl, name) {
         console.log('posted url', json)
         dispatch(addUrlSuccess());
       })
-      .then(res => {
+      .then(() => {
         dispatch(reset('addUrl'));
         dispatch(userUrls());
+        history.push('/urls')
       })
   }
 }

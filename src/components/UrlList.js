@@ -5,9 +5,10 @@ import { userUrls } from '../actions'
 import { viewUrl } from '../actions/viewUrlInfo'
 import { connect } from 'react-redux'
 import Button from '@material-ui/core/Button'
+import UrlMaterialList from '../components/material/UrlMaterialList'
 
 const singleUrlContainer = {
-  border:'1px solid red'
+
 }
 
 const urlListContainer = {
@@ -39,7 +40,7 @@ class UrlList extends Component {
           <div style={urlListContainer}>
           {items.map(item =>
           <div style={singleUrlContainer}>
-            <Url
+          <UrlMaterialList
               key={item.url}
               name={item.name}
               date={item.date_added}
@@ -47,8 +48,8 @@ class UrlList extends Component {
               url={(httpRegex.test(item.url)) ? (item.url) : ('https://' + item.url) }
               // onDelete={() => deleteUrl(item.id)}
               id={item.id}
-            />
-            <Button onClick={() => this.props.dispatch(viewUrl(item))}>View</Button>
+              item={item}
+          />
             </div>
           )}
           </div>

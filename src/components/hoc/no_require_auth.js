@@ -1,20 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
-import purple from '@material-ui/core/colors/purple';
-import green from '@material-ui/core/colors/green';
+import { MuiThemeProvider } from '@material-ui/core/styles';
+import {theme} from './theme';
 
 export default function (ComposedComponent) {
-  const theme = createMuiTheme({
-    palette: {
-      primary: purple,
-      secondary: green,
-    },
-    status: {
-      danger: 'orange',
-    },
-  });
+
   class NotAuthentication extends Component {
     
     componentWillMount() {

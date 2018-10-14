@@ -4,7 +4,6 @@ import { connect } from 'react-redux'
 // import {deleteUrl} from '../actions'
 import Typography from '@material-ui/core/Typography'
 import {Button} from '@material-ui/core'
-import SimpleFade from '../components/material/Fade'
 import Fade from '@material-ui/core/Fade';
 
 class UrlInfo extends Component {

@@ -11,7 +11,6 @@ class App extends Component {
       <div>
       <TemporaryDrawer/>
         <h1 style={{textAlign:'center'}}>Your links</h1>
-        <Link to='/addurl'>Shorten a new link</Link>
         <div style={{display:'flex'}}>
           <UrlListContainer/>
           <UrlInfo/>

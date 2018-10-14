@@ -8,6 +8,8 @@ import Divider from '@material-ui/core/Divider';
 import {Link} from 'react-router-dom';
 import SignOut from '../SignOut';
 import { signOutAction } from '../../actions';
+import NavList from './NavList';
+
 const styles = {
   list: {
     width: 250,
@@ -36,9 +38,13 @@ class TemporaryDrawer extends React.Component {
 
     const sideList = (
       <div className={classes.list}>
-        <Link to='/urls'>Your links</Link>
+        <Link to='/urls' style={{textDecoration:'none'}} >
+          <Button style={{ width:'100%'}}>Your links</Button>
+        </Link>
         <Divider/>
-        <Link to='/addurl'>Shorten a new link</Link>
+        <Link to='/addurl' style={{textDecoration:'none'}}>
+          <Button variant="contained" color="primary" style={{ width:'100%'}}>Shorten a new link</Button>
+        </Link>
         <Divider/>
         <SignOut signOutAction={signOutAction}/>
       </div>
@@ -54,7 +60,8 @@ class TemporaryDrawer extends React.Component {
             onClick={this.toggleDrawer('left', false)}
             onKeyDown={this.toggleDrawer('left', false)}
           >
-            {sideList}
+            {/* {sideList} */}
+            <NavList/>
           </div>
         </Drawer>
       </div>

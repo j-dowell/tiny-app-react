@@ -15,17 +15,14 @@ const store = createStore(
   applyMiddleware(reduxThunk, logger)
 )
 
-
 const user = localStorage.getItem('user');
 if(user) {
   console.log('checked')
   store.dispatch({ type: AUTHENTICATED });
 }
 
-
-
 render(
-    <Root store={store} />,
+  <Root store={store} />,
   document.getElementById('root')
 )
 

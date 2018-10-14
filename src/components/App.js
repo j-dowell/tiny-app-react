@@ -5,22 +5,34 @@ import NavBar from './NavBar';
 import UrlInfo from './UrlInfo';
 import { Link } from 'react-router-dom';
 import TemporaryDrawer from './material/Drawer';
+import Typography from '@material-ui/core/Typography';
+import Button from '@material-ui/core/Button';
 
+const container = {
+  display: 'flex',
+  alignItems: "center",
+  height: '-webkit-fill-available',
+}
+
+const buttons = {
+  display: 'flex',
+  justifyContent: 'spaceEvenly'
+}
+
+const linkStyle = {
+  textDecoration: 'none'
+}
 class App extends Component {
   render() {
     return (
-      <div>
-        <h1 style={{textAlign:'center'}}>TinyURL</h1>
-        <NavBar/>
-        <TemporaryDrawer/>
-        {/* <NavBar/>
-        <AddNewUrl/>
-        <div style={{display:'flex'}}>
-          <UrlListContainer/>
-          <UrlInfo/>
-        </div> */}
+      <div style={container}>
+        <Typography variant="h1" color="primary" style={{textAlign:'center'}}>TinyURL</Typography>
+        <div style={buttons}>
+          <Link to='urls' style={linkStyle}><Button>View Links</Button></Link>
+          <Link to='addurl' style={linkStyle}><Button>Add Link</Button></Link>
+        </div>
       </div>
-    );
+    )
   }
 }
 

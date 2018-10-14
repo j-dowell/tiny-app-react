@@ -27,7 +27,7 @@ export default function (ComposedComponent) {
     render() {
       return (
         <MuiThemeProvider theme={theme}>
-          <ComposedComponent {...this.props} />;
+          <ComposedComponent {...this.props} />
         </MuiThemeProvider>
       )
     }

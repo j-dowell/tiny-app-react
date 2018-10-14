@@ -11,9 +11,8 @@ class App extends Component {
     return (
       <div>
         <TemporaryDrawer/>      
-        <Link to='/urls'>View your links</Link>
         <div style={{display:'flex'}}>
-          <Add/>
+          <Add history={this.props.history}/>
         </div>
       </div>
     );

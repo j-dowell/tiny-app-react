@@ -7,9 +7,9 @@ import * as serviceWorker from './serviceWorker';
 import reduxThunk from 'redux-thunk';
 import { AUTHENTICATED } from './actions';
 import logger from 'redux-logger'
-
 // const createStoreWithMiddleware = applyMiddleware(reduxThunk, logger)(createStore);
 // const store = createStoreWithMiddleware(tinyApp);
+
 const store = createStore(
   tinyApp,
   applyMiddleware(reduxThunk, logger)
@@ -22,8 +22,10 @@ if(user) {
   store.dispatch({ type: AUTHENTICATED });
 }
 
+
+
 render(
-  <Root store={store} />,
+    <Root store={store} />,
   document.getElementById('root')
 )
 

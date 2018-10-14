@@ -12,6 +12,7 @@ import Register from './Register';
 import UrlPageContainer from '../containers/UrlPageContainer';
 import AddNewUrl from './Add';
 import AddUrlPage from '../containers/AddUrlPage';
+
 const Root = ({ store }) => (
   <Provider store={store}>
     <Router>

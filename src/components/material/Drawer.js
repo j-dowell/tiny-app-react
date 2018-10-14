@@ -36,9 +36,6 @@ class TemporaryDrawer extends React.Component {
 
     const sideList = (
       <div className={classes.list}>
-        {/* <List>{mailFolderListItems}</List>
-        <Divider />
-        <List>{otherMailFolderListItems}</List> */}
         <Link to='/urls'>Your links</Link>
         <Divider/>
         <Link to='/addurl'>Shorten a new link</Link>
@@ -49,7 +46,7 @@ class TemporaryDrawer extends React.Component {
 
     return (
       <div>
-        <Button onClick={this.toggleDrawer('left', true)}>MENU</Button>
+        <Button color="primary" onClick={this.toggleDrawer('left', true)}>MENU</Button>
         <Drawer open={this.state.left} onClose={this.toggleDrawer('left', false)}>
           <div
             tabIndex={0}

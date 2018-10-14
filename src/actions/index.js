@@ -50,7 +50,7 @@ export function userUrls() {
     return axios.get(`/api/urlList/${userToken}`)
       .then(response => {
         console.log(response.data.urls);
-        dispatch(fetchUrlsSuccess(response.data.urls));
+        dispatch(fetchUrlsSuccess(response.data.urls.reverse()));
         return response.data.urls;
       })
   }

@@ -9,12 +9,11 @@ class Redirecter extends Component {
     }
   }
   componentWillMount() {
-    axios.get(`/shortUrl/${this.props.match.params.shortUrl}`)
+    axios.get(`/shortURL/${this.props.match.params.shortURL}`)
       .then(result => {
-        console.log(result)
         this.setState({loading:false})
-        if (result.data.longUrl) {
-          window.location = result.data.longUrl;
+        if (result.data.longURL) {
+          window.location = result.data.longURL;
         } else {
           this.setState({loading: false, invalidUrl:true})
         }

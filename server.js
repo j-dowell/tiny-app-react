@@ -222,6 +222,28 @@ app.post('/api/register', (req, res) => {
     .catch(err => console.log(err))
 });
 
+async function doesShortURLExist(shortURL) {
+  const client = new MongoClient(url, { useNewUrlParser: true });
+  try {
+    await client
+      .connect()
+      .catch(err => console.log(`Couldn't connect`, err));
+    const db = client.db(dbName);
+    console.log('doesshorturlexist function', shortURL)
+    const link = await db.collection('links')
+      .findOne({ shortURL: shortURL })
+      .catch(err => console.log('Error retrieving link', err));
+    if (link) {
+      return false;
+    } else {
+      return true;
+    }
+  }
+  catch(err) {
+    console.log(err.stack);
+  }
+}
+
 async function addUrl(newUrl, name, token) {
   const client = new MongoClient(url, { useNewUrlParser: true });
   const {userID} = verifyToken(token);
@@ -231,19 +253,38 @@ async function addUrl(newUrl, name, token) {
     await client.connect();
     console.log("Connected correctly to server");
     const db = client.db(dbName);
+
+    let shortURL = randomIdGenerator();
+    let validShortURL = await doesShortURLExist(shortURL)
+    console.log('is link valid', validShortURL);
+    while (!validShortURL) {
+      shortUrl = randomIdGenerator();
+      validShortURL = await doesShortURLExist(shortURL)
+    }
+    const linkCollection = db.collection('links');
+    const linkAddition = await linkCollection
+      .insertOne({
+        longURL:newUrl,
+        shortURL: shortURL,
+        user:userObjectID,
+        visits: []
+      });
+    console.log('Add URL result', linkAddition);
+
+    // Adding to users
     const col = db.collection('users');
-    const result = await col
+    const userAddLink = await col
       .updateOne({_id:userObjectID}, {$push: {
         urls: {
           url:newUrl,
           name:name,
           date_added: new Date(),
-          shortURL: randomIdGenerator()
+          shortURL: shortURL
         }
       }});
-    console.log('Add URL result', result);
-    assert.equal(1, result.matchedCount);
-    assert.equal(1, result.modifiedCount);
+    console.log('Add URL result', userAddLink);
+    assert.equal(1, userAddLink.matchedCount);
+    assert.equal(1, userAddLink.modifiedCount);
     return { urlAdded: true };
   } catch (err) {
     console.log(err.stack);
@@ -257,17 +298,19 @@ app.post('/api/addUrl', (req, res) => {
   })
 });
 
-async function getLongUrl(shortUrl) {
+async function getLongURL(shortURL) {
   const client = new MongoClient(url, { useNewUrlParser: true });
   try {
     await client
       .connect()
       .catch(err => console.log(`Couldn't connect`, err));
     const db = client.db(dbName);
+    console.log('shorturl', shortURL)
     const link = await db.collection('links')
-      .findOne({ shortUrl: shortUrl })
+      .findOne({ shortURL: shortURL })
       .catch(err => console.log('Error retrieving link', err));
-    if (link) {
+    console.log(link);
+      if (link) {
       return link; 
     } else {
       return {};
@@ -278,8 +321,8 @@ async function getLongUrl(shortUrl) {
   }
 } 
 
-app.get('/shortUrl/:shortUrl', (req, res) => {
-  getLongUrl(req.params.shortUrl)
+app.get('/shortURL/:shortURL', (req, res) => {
+  getLongURL(req.params.shortURL)
     .then(result => {
       console.log(result)
       res.json(result);

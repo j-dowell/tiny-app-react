@@ -5,6 +5,8 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
+import { signOutAction } from '../../actions';
+import SignOut from '../SignOut';
 
 const styles = theme => ({
   root: {
@@ -24,6 +26,9 @@ function SimpleList(props) {
         </ListItem>
         <ListItem button component="a" href="/addurl">
           <ListItemText primary="ADD NEW LINK" />
+        </ListItem>
+        <ListItem>
+          <SignOut signOutAction={signOutAction}/>
         </ListItem>
       </List>
     </div>

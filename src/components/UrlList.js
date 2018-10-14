@@ -39,9 +39,8 @@ class UrlList extends Component {
         {items ? (
           <div style={urlListContainer}>
           {items.map(item =>
-          <div style={singleUrlContainer}>
+          <div key={item.shortURL} style={singleUrlContainer}>
           <UrlMaterialList
-              key={item.url}
               name={item.name}
               date={item.date_added}
               shortUrl={item.shortURL}

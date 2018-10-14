@@ -3,7 +3,7 @@ import { createMuiTheme } from '@material-ui/core/styles';
 export const theme = createMuiTheme({
   typography: {
     useNextVariants: true,
-    fontFamily: 'Josefin Sans',
+    fontFamily: ['Josefin Sans', 'Montserrat'],
     body1: {
       fontFamily: 'Montserrat',
       fontWeight: 400
@@ -13,6 +13,7 @@ export const theme = createMuiTheme({
       fontWeight: 700,
       fontSize: 50,
     },
+
   },
   palette: {
     primary: {

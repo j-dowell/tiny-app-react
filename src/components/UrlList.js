@@ -4,6 +4,17 @@ import Url from './Url';
 import { userUrls } from '../actions'
 import { viewUrl } from '../actions/viewUrlInfo'
 import { connect } from 'react-redux'
+import Button from '@material-ui/core/Button'
+
+const singleUrlContainer = {
+  border:'1px solid red'
+}
+
+const urlListContainer = {
+  overflow: 'scroll',
+  height: '-webkit-fill-available',
+  width:'20%'
+}
 
 class UrlList extends Component {
   componentDidMount() {
@@ -25,9 +36,9 @@ class UrlList extends Component {
     return (
       <React.Fragment>
         {items ? (
-          <div>
+          <div style={urlListContainer}>
           {items.map(item =>
-          <div>
+          <div style={singleUrlContainer}>
             <Url
               key={item.url}
               name={item.name}
@@ -37,7 +48,7 @@ class UrlList extends Component {
               // onDelete={() => deleteUrl(item.id)}
               id={item.id}
             />
-            <button onClick={() => this.props.dispatch(viewUrl(item))}> view </button>
+            <Button onClick={() => this.props.dispatch(viewUrl(item))}>View</Button>
             </div>
           )}
           </div>

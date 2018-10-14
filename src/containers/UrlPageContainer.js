@@ -4,13 +4,20 @@ import UrlListContainer from '../containers/UrlListContainer';
 import UrlInfo from '../components/UrlInfo';
 import { Link } from 'react-router-dom';
 import TemporaryDrawer from '../components/material/Drawer';
+import Typography from '@material-ui/core/Typography'
+
+const styles = {
+  title: {
+    textAlign: 'center'
+  }
+}
 
 class App extends Component {
   render() {
     return (
       <div>
       <TemporaryDrawer/>
-        <h1 style={{textAlign:'center'}}>Your links</h1>
+        <Typography variant='h1' style={styles.title}>Your Links</Typography>
         <div style={{display:'flex'}}>
           <UrlListContainer/>
           <UrlInfo/>

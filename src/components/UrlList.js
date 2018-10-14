@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 // import PropTypes from 'prop-types';
 import Url from './Url';
-import { userUrls} from '../actions'
+import { userUrls } from '../actions'
+import { viewUrl } from '../actions/viewUrlInfo'
 import { connect } from 'react-redux'
 
 class UrlList extends Component {
@@ -26,6 +27,7 @@ class UrlList extends Component {
         {items ? (
           <div>
           {items.map(item =>
+          <div>
             <Url
               key={item.url}
               name={item.name}
@@ -35,6 +37,8 @@ class UrlList extends Component {
               // onDelete={() => deleteUrl(item.id)}
               id={item.id}
             />
+            <button onClick={() => this.props.dispatch(viewUrl(item))}> view </button>
+            </div>
           )}
           </div>
         ) : (<p>Make a short url!</p>)}

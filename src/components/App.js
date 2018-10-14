@@ -2,14 +2,18 @@ import React, { Component } from 'react';
 import AddNewUrl from './Add';
 import UrlListContainer from '../containers/UrlListContainer';
 import NavBar from './NavBar';
+import UrlInfo from './UrlInfo';
 class App extends Component {
   render() {
     return (
       <div>
-        <p>TinyURL</p>
+        <h1>TinyURL</h1>
         <NavBar/>
         <AddNewUrl/>
-        <UrlListContainer/>
+        <div style={{display:'flex'}}>
+          <UrlListContainer/>
+          <UrlInfo/>
+        </div>
       </div>
     );
   }

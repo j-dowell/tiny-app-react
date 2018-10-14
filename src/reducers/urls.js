@@ -1,10 +1,10 @@
 import {
   FETCH_URLS_BEGIN,
   FETCH_URLS_SUCCESS,
-  FETCH_URLS_FAILURE
+  FETCH_URLS_FAILURE,
 } from '../actions';
 import { ADD_URL_BEGIN, ADD_URL_SUCCESS, ADD_URL_FAILURE } from '../actions/addUrl';
-
+import { VIEW_URL } from '../actions/viewUrlInfo';
 const initialState = {
   items: [],
   loading: false,
@@ -13,19 +13,11 @@ const initialState = {
 
 const urls = (state = initialState, action) => {
   switch (action.type) {
-    // case 'ADD_URL':
-    //   return [
-    //     ...state,
-    //     {
-    //       id: action.id,
-    //       url: action.url,
-    //       name: action.name,
-    //       shortUrl: randomIdGenerator()
-    //     }
-    //   ]
-    // case 'DELETE_URL':
-    //   const newState = state.filter(url => url.id !== action.id);
-    //   return newState
+    case VIEW_URL:
+      return {
+        ...state,
+        selectedUrl: action.payload.url
+      }
     case ADD_URL_BEGIN:
       return {
         ...state,

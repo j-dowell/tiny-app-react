@@ -24,14 +24,14 @@ class UrlList extends Component {
   }
 
   render() {
-    const { error, loading, items, usersLoading } = this.props;
+    const { error, loading, items, usersLoading, loading_info } = this.props;
     const httpRegex = /^(http:|https:)/;
     if (error) {
       return <div>Error! {error.message}</div>;
     }
 
-    if (loading || usersLoading) {
-      return <div>Loading...</div>;
+    if (loading || usersLoading || loading_info) {
+      return <div></div>;
     }
 
     return (
@@ -64,7 +64,8 @@ const mapStateToProps = state => {
     items: state.urls.items,
     loading: state.urls.loading,
     error: state.urls.error,
-    usersLoading: state.users.loading
+    usersLoading: state.users.loading,
+    loading_info: state.urls.loading_info
   }
 }
 

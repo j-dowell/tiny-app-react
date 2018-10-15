@@ -56,11 +56,12 @@ export function userUrls() {
     return axios.get(`/api/urlList/${userToken}`)
       .then(response => {
         console.log(response.data.urls);
+        dispatch(getURLInfo(response.data.urls[0].shortURL))
         dispatch(fetchUrlsSuccess(response.data.urls.reverse()));
         return response.data.urls;
       })
       .then((res) => {
-        dispatch(getURLInfo(res[0].shortURL))
+        
         dispatch(viewUrl(res[0]))
       })
   }

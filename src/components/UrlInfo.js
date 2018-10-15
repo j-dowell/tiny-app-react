@@ -76,7 +76,9 @@ class UrlInfo extends Component {
             </ul>
           </div>
         </div>) : (
-          <CircularProgress size={50} />
+          <div style={loadingStyle}> 
+            <CircularProgress size={50} />
+          </div>
           )}
       </div>
     )

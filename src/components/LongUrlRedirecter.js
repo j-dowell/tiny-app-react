@@ -8,14 +8,16 @@ class Redirecter extends Component {
       loading:true
     }
   }
-  componentWillMount() {
+  componentDidMount() {
     const shortURL = this.props.match.params.shortURL;
+    console.log('shorturl', shortURL)
     axios.get(`http://ip-api.com/json`)
       .then(response => {
         console.log(response.data.country)
         const country = response.data.country
         return axios.post(`/shortURL/clickinfo`, {shortURL, country})
         .then(() => {
+          console.log('made it ')
           return axios.get(`/shortURL/${this.props.match.params.shortURL}`)
           .then(result => {
             this.setState({loading:false})

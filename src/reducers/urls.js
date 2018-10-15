@@ -19,6 +19,7 @@ const urls = (state = initialState, action) => {
     case VIEW_URL:
       return {
         ...state,
+        loading_info:true,
         selectedUrl: action.payload.url
       }
     case GET_URL_INFO_BEGIN:
@@ -52,6 +53,7 @@ const urls = (state = initialState, action) => {
       return {
         ...state,
         loading: true,
+        loading_info:true,
         error: null
       };
 

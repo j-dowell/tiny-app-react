@@ -23,7 +23,7 @@ export const getURLInfoSuccess = (info) => ({
 
 export function getURLInfo(shortURL) {
   return function(dispatch) {
-    dispatch(getURLInfoBegin())
+    dispatch(getURLInfoBegin());
     return axios.get(`/api/${shortURL}/clickinfo`)
       .then(res => {
         console.log('res', res.data)

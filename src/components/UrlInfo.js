@@ -5,6 +5,7 @@ import { connect } from 'react-redux'
 import Typography from '@material-ui/core/Typography'
 import {Button} from '@material-ui/core'
 import Fade from '@material-ui/core/Fade';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 class UrlInfo extends Component {
   constructor(props) {
@@ -15,19 +16,19 @@ class UrlInfo extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    let x = this.getCountries(nextProps.info)
+    let countries = this.getCountries(nextProps.info)
     console.log(nextProps.info)
-    this.setState({countries:x})
+    this.setState({countries})
   }
 
-  getCountries = (list) => {
+  getCountries = (clickInfoObject) => {
     function onlyUnique(value, index, self) { 
       return self.indexOf(value) === index;
     }  
     let countries = [];
-    list.forEach(item => countries.push(item.country))
+    clickInfoObject.forEach(object => countries.push(object.country))
     let uniqueCountries = countries.filter(onlyUnique);
-    return uniqueCountries
+    return uniqueCountries;
   }
   
   render() {
@@ -69,22 +70,19 @@ class UrlInfo extends Component {
             >
               <Typography>Copied to clipboard!</Typography>
             </Fade>
-            <Typography>Times clicked:{info.length}</Typography>
+            <Typography>Times clicked: {info.length}</Typography>
             <ul>Locations: 
               {this.state.countries.map(x => <li key={x}>{x}</li>)}
             </ul>
           </div>
-        </div>) : (<p>click</p>)}
+        </div>) : (
+          <CircularProgress size={50} />
+          )}
       </div>
     )
   }
 }
 
-
-
-// const UrlInfo = ({ url }) => (
-  
-// )
 
 const mapStateToProps = state => {
   return {

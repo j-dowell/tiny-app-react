@@ -309,7 +309,7 @@ async function getLongURL(shortURL) {
     const link = await db.collection('links')
       .findOne({ shortURL: shortURL })
       .catch(err => console.log('Error retrieving link', err));
-    console.log(link);
+    console.log('getlongurl', link);
       if (link) {
       return link; 
     } else {
@@ -335,12 +335,8 @@ async function linkVisitInfo(shortURL, country) {
           country
         }
       }});
-    console.log(link);
-      if (link) {
-      return link; 
-    } else {
-      return {};
-    }
+    assert.equal(1, link.matchedCount);
+    assert.equal(1, link.modifiedCount);
   }
   catch(err) {
     console.log(err.stack);
@@ -377,7 +373,7 @@ app.get(`/api/:shortURL/clickinfo`, (req, res) => {
 
 app.post('/shortURL/clickinfo', (req, res) => {
   linkVisitInfo(req.body.shortURL, req.body.country)
-    .then(result => console.log(result));
+    .then(() => res.json(200));
 });
 
 app.get('/shortURL/:shortURL', (req, res) => {
@@ -385,7 +381,7 @@ app.get('/shortURL/:shortURL', (req, res) => {
 // console.log(ip)
   getLongURL(req.params.shortURL)
     .then(result => {
-      console.log(result)
+      console.log('server 388', result)
       res.json(result);
     })
 });

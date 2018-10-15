@@ -20,6 +20,8 @@ export const FETCH_URLS_FAILURE = 'FETCH_URLS_FAILURE';
 export const LOGGING_IN = 'LOGGING_IN';
 export const LOGGED_IN = 'LOGGED_IN';
 
+export const LOADED_ALL = 'LOADED_ALL'
+
 export const loggingIn = () => ({
   type: LOGGING_IN
 })
@@ -29,6 +31,10 @@ export const loggedIn = () => ({
 export const fetchUrlsBegin = () => ({
   type: FETCH_URLS_BEGIN
 });
+
+export const loadedAll = () => ({
+  type: LOADED_ALL
+})
 
 export const fetchUrlsSuccess = URLS => ({
   type: FETCH_URLS_SUCCESS,
@@ -54,8 +60,8 @@ export function userUrls() {
         return response.data.urls;
       })
       .then((res) => {
-        dispatch(viewUrl(res[0]))
         dispatch(getURLInfo(res[0].shortURL))
+        dispatch(viewUrl(res[0]))
       })
   }
 }

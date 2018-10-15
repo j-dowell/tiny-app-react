@@ -88,7 +88,7 @@ const mapStateToProps = state => {
   return {
     url: state.urls.selectedUrl,
     info: state.urls.url_info,
-    isLoading: state.urls.loading_info
+    isLoading: state.urls.loading_info,
   }
 }
 

@@ -309,6 +309,50 @@ async function getLongURL(shortURL) {
     const link = await db.collection('links')
       .findOne({ shortURL: shortURL })
       .catch(err => console.log('Error retrieving link', err));
+    console.log('getlongurl', link);
+      if (link) {
+      return link; 
+    } else {
+      return {};
+    }
+  }
+  catch(err) {
+    console.log(err.stack);
+  }
+}; 
+
+async function linkVisitInfo(shortURL, country) {
+  const client = new MongoClient(url, { useNewUrlParser: true });
+  try {
+    await client
+      .connect()
+      .catch(err => console.log(`Couldn't connect`, err));
+    const db = client.db(dbName);
+    const link = await db.collection('links')
+      .updateOne({shortURL}, {$push: {
+        visits: {
+          date: new Date(),
+          country
+        }
+      }});
+    assert.equal(1, link.matchedCount);
+    assert.equal(1, link.modifiedCount);
+  }
+  catch(err) {
+    console.log(err.stack);
+  }
+}
+
+async function getLinkInfo(shortURL) {
+  const client = new MongoClient(url, { useNewUrlParser: true });
+  try {
+    await client
+      .connect()
+      .catch(err => console.log(`Couldn't connect`, err));
+    const db = client.db(dbName);
+    const link = await db.collection('links')
+      .findOne({shortURL})
+      .catch(err => console.log('Error retrieving link', err));
     console.log(link);
       if (link) {
       return link; 
@@ -319,15 +363,30 @@ async function getLongURL(shortURL) {
   catch(err) {
     console.log(err.stack);
   }
-} 
+}
+
+app.get(`/api/:shortURL/clickinfo`, (req, res) => {
+  getLinkInfo(req.params.shortURL)
+    .then(result => res.json(result.visits));
+})
+
+
+app.post('/shortURL/clickinfo', (req, res) => {
+  linkVisitInfo(req.body.shortURL, req.body.country)
+    .then(() => res.json(200));
+});
 
 app.get('/shortURL/:shortURL', (req, res) => {
+//   var ip = req.headers['x-forwarded-for'] ? req.headers['x-forwarded-for'].split(',')[0] : req.connection.remoteAddress;
+// console.log(ip)
   getLongURL(req.params.shortURL)
     .then(result => {
-      console.log(result)
+      console.log('server 388', result)
       res.json(result);
     })
-})
+});
+
+
 
 const port = process.env.PORT || 3005;
 app.listen(port);

@@ -5,6 +5,7 @@ import { connect } from 'react-redux'
 import Typography from '@material-ui/core/Typography'
 import {Button} from '@material-ui/core'
 import Fade from '@material-ui/core/Fade';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 class UrlInfo extends Component {
   constructor(props) {
@@ -12,6 +13,22 @@ class UrlInfo extends Component {
     this.state = {
       clicked:false,
     }
+  }
+
+  componentWillReceiveProps(nextProps) {
+    let countries = this.getCountries(nextProps.info)
+    console.log(nextProps.info)
+    this.setState({countries})
+  }
+
+  getCountries = (clickInfoObject) => {
+    function onlyUnique(value, index, self) { 
+      return self.indexOf(value) === index;
+    }  
+    let countries = [];
+    clickInfoObject.forEach(object => countries.push(object.country))
+    let uniqueCountries = countries.filter(onlyUnique);
+    return uniqueCountries;
   }
   
   render() {
@@ -28,11 +45,12 @@ class UrlInfo extends Component {
       }, 1000)
     };
 
-    const { url } = this.props;
+  
 
+    const { url, info, isLoading } = this.props;
     return (
       <div>
-        {url ? ( 
+        {!isLoading ? ( 
         <div>
           <div>
             <Typography variant="h3">{url.name}</Typography>
@@ -52,24 +70,25 @@ class UrlInfo extends Component {
             >
               <Typography>Copied to clipboard!</Typography>
             </Fade>
-            <Typography>Times clicked:</Typography>
-            <Typography>Locations</Typography>
+            <Typography>Times clicked: {info.length}</Typography>
+            <ul>Locations: 
+              {this.state.countries.map(x => <li key={x}>{x}</li>)}
+            </ul>
           </div>
-        </div>) : (<p>click</p>)}
+        </div>) : (
+          <CircularProgress size={50} />
+          )}
       </div>
     )
   }
 }
 
 
-
-// const UrlInfo = ({ url }) => (
-  
-// )
-
 const mapStateToProps = state => {
   return {
-    url: state.urls.selectedUrl
+    url: state.urls.selectedUrl,
+    info: state.urls.url_info,
+    isLoading: state.urls.loading_info
   }
 }
 

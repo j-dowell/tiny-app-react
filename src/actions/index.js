@@ -1,5 +1,5 @@
 import axios from 'axios';
-
+import {viewUrl, getURLInfo} from './viewUrlInfo'
 // let nextUrlId = 0
 // export const addUrl = (name, url) => ({
 //   type: 'ADD_URL',
@@ -52,6 +52,10 @@ export function userUrls() {
         console.log(response.data.urls);
         dispatch(fetchUrlsSuccess(response.data.urls.reverse()));
         return response.data.urls;
+      })
+      .then((res) => {
+        dispatch(viewUrl(res[0]))
+        dispatch(getURLInfo(res[0].shortURL))
       })
   }
 }

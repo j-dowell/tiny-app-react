@@ -10,6 +10,9 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
+import Grow from '@material-ui/core/Grow'
+import Divider from '@material-ui/core/Divider';
+
 class UrlInfo extends Component {
   constructor(props) {
     super(props);
@@ -53,26 +56,32 @@ class UrlInfo extends Component {
     const { url, info, isLoading } = this.props;
     return (
       <div>
-        {!isLoading ? ( 
-        <div>
+        {!isLoading ? (
+          <Grow in={true}
+        {...(true ? { timeout: 1000 } : {})}>
+        <div style={{paddingTop:'19px'}}>
           <div>
             <Typography variant="h3">{url.name}</Typography>
-            <Typography variant="h4">{url.url}</Typography>
-            <Typography variant="h4">Created {new Date(url.date_added).toLocaleString()}</Typography>
-            <Typography variant="h4">/{url.shortURL}</Typography>
-            <Button onClick={() => copyToClipboard(url.shortURL)}>Copy</Button>
-            <Button>Share</Button>
-            <Button>Edit</Button>
-            <Button>Delete</Button>
+            <Divider/>
+            <Typography variant="h5">{url.url}</Typography>
+            <Typography variant="h5">Created {new Date(url.date_added).toLocaleString()}</Typography>
+            <Typography style={{display:'inline'}}variant="h5">tinyURL/</Typography><Typography style={{display:'inline'}} variant="h4" color="primary">{url.shortURL}</Typography>
+            <div style={buttonContainer}>
+              <Button onClick={() => copyToClipboard(url.shortURL)}>Copy</Button>
+              <Button>Share</Button>
+              <Button>Edit</Button>
+              <Button>Delete</Button>
+            </div>
           </div>
           <div>
-          <br/>
             <Fade
               in={this.state.clicked}
               timeout={1000}
             >
-              <Typography>Copied to clipboard!</Typography>
+              <Typography color="secondary" style={{paddingBottom:'1em', paddingLeft:"1em"}}>Copied to clipboard!</Typography>
             </Fade>
+            <Typography variant="h4">Statistics</Typography>
+            <Divider/>
             <Typography variant="h5">Clicks: {info.length}</Typography>
             <Typography variant="h5">Countries:</Typography>
             <List>
@@ -85,7 +94,8 @@ class UrlInfo extends Component {
               })}
             </List>
           </div>
-        </div>) : (
+        </div>
+        </Grow>) : (
           <CircularProgress size={50} />
           )}
       </div>
@@ -93,6 +103,9 @@ class UrlInfo extends Component {
   }
 }
 
+const buttonContainer = {
+  paddingTop: '2em'
+}
 
 const mapStateToProps = state => {
   return {

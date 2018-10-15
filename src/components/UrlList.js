@@ -6,7 +6,7 @@ import { viewUrl } from '../actions/viewUrlInfo'
 import { connect } from 'react-redux'
 import Button from '@material-ui/core/Button'
 import UrlMaterialList from '../components/material/UrlMaterialList'
-
+import Grow from '@material-ui/core/Grow'
 const singleUrlContainer = {
 
 }
@@ -31,12 +31,14 @@ class UrlList extends Component {
     }
 
     if (loading || usersLoading) {
-      return <div>Loading...</div>;
+      return <div></div>;
     }
 
     return (
       <React.Fragment>
         {items ? (
+          <Grow in={true}
+        {...(true ? { timeout: 1000 } : {})}>
           <div style={urlListContainer}>
           {items.map(item =>
           <div key={item.shortURL} style={singleUrlContainer}>
@@ -52,6 +54,7 @@ class UrlList extends Component {
             </div>
           )}
           </div>
+          </Grow>
         ) : (<p>Make a short url!</p>)}
       </React.Fragment>
     );

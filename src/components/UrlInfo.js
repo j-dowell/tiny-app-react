@@ -6,7 +6,10 @@ import Typography from '@material-ui/core/Typography'
 import {Button} from '@material-ui/core'
 import Fade from '@material-ui/core/Fade';
 import CircularProgress from '@material-ui/core/CircularProgress';
-
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import ListItemText from '@material-ui/core/ListItemText';
 class UrlInfo extends Component {
   constructor(props) {
     super(props);
@@ -70,10 +73,17 @@ class UrlInfo extends Component {
             >
               <Typography>Copied to clipboard!</Typography>
             </Fade>
-            <Typography>Times clicked: {info.length}</Typography>
-            <ul>Locations: 
-              {this.state.countries.map(x => <li key={x}>{x}</li>)}
-            </ul>
+            <Typography variant="h5">Clicks: {info.length}</Typography>
+            <Typography variant="h5">Countries:</Typography>
+            <List>
+              {this.state.countries.map(x => {
+                return (
+                  <ListItem key={x}>
+                    <ListItemText>{x}</ListItemText>
+                  </ListItem>
+                )
+              })}
+            </List>
           </div>
         </div>) : (
           <CircularProgress size={50} />

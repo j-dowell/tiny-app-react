@@ -11,7 +11,7 @@ const initialState = {
   loading: false,
   error: null,
   url_info: [],
-  loading_info: true
+  loading_info: true,
 };
 
 const urls = (state = initialState, action) => {

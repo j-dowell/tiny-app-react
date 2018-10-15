@@ -28,11 +28,11 @@ class UrlInfo extends Component {
       }, 1000)
     };
 
-    const { url } = this.props;
-
+    const { url, info, isLoading } = this.props;
+    console.log(info);
     return (
       <div>
-        {url ? ( 
+        {url && info ? ( 
         <div>
           <div>
             <Typography variant="h3">{url.name}</Typography>
@@ -52,8 +52,8 @@ class UrlInfo extends Component {
             >
               <Typography>Copied to clipboard!</Typography>
             </Fade>
-            <Typography>Times clicked:</Typography>
-            <Typography>Locations</Typography>
+            <Typography>Times clicked:{info.length}</Typography>
+            <Typography>Locations: {info[0].date}</Typography>
           </div>
         </div>) : (<p>click</p>)}
       </div>
@@ -69,7 +69,8 @@ class UrlInfo extends Component {
 
 const mapStateToProps = state => {
   return {
-    url: state.urls.selectedUrl
+    url: state.urls.selectedUrl,
+    info: state.urls.url_info,
   }
 }
 

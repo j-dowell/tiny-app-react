@@ -13,6 +13,22 @@ class UrlInfo extends Component {
       clicked:false,
     }
   }
+
+  componentWillReceiveProps(nextProps) {
+    let x = this.getCountries(nextProps.info)
+    console.log(nextProps.info)
+    this.setState({countries:x})
+  }
+
+  getCountries = (list) => {
+    function onlyUnique(value, index, self) { 
+      return self.indexOf(value) === index;
+    }  
+    let countries = [];
+    list.forEach(item => countries.push(item.country))
+    let uniqueCountries = countries.filter(onlyUnique);
+    return uniqueCountries
+  }
   
   render() {
     const copyToClipboard = str => {
@@ -28,11 +44,12 @@ class UrlInfo extends Component {
       }, 1000)
     };
 
+  
+
     const { url, info, isLoading } = this.props;
-    console.log(info);
     return (
       <div>
-        {url && info ? ( 
+        {!isLoading ? ( 
         <div>
           <div>
             <Typography variant="h3">{url.name}</Typography>
@@ -53,7 +70,9 @@ class UrlInfo extends Component {
               <Typography>Copied to clipboard!</Typography>
             </Fade>
             <Typography>Times clicked:{info.length}</Typography>
-            <Typography>Locations: {info[0].date}</Typography>
+            <ul>Locations: 
+              {this.state.countries.map(x => <li key={x}>{x}</li>)}
+            </ul>
           </div>
         </div>) : (<p>click</p>)}
       </div>
@@ -71,6 +90,7 @@ const mapStateToProps = state => {
   return {
     url: state.urls.selectedUrl,
     info: state.urls.url_info,
+    isLoading: state.urls.loading_info
   }
 }
 

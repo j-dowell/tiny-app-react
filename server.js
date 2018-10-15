@@ -319,15 +319,50 @@ async function getLongURL(shortURL) {
   catch(err) {
     console.log(err.stack);
   }
-} 
+}; 
+
+async function linkVisitInfo(shortURL, country) {
+  const client = new MongoClient(url, { useNewUrlParser: true });
+  try {
+    await client
+      .connect()
+      .catch(err => console.log(`Couldn't connect`, err));
+    const db = client.db(dbName);
+    const link = await db.collection('links')
+      .updateOne({shortURL}, {$push: {
+        visits: {
+          date: new Date(),
+          country
+        }
+      }});
+    console.log(link);
+      if (link) {
+      return link; 
+    } else {
+      return {};
+    }
+  }
+  catch(err) {
+    console.log(err.stack);
+  }
+}
+
+app.post('/shortURL/clickinfo', (req, res) => {
+  linkVisitInfo(req.body.shortURL, req.body.country)
+    .then(result => console.log(result));
+});
 
 app.get('/shortURL/:shortURL', (req, res) => {
+//   var ip = req.headers['x-forwarded-for'] ? req.headers['x-forwarded-for'].split(',')[0] : req.connection.remoteAddress;
+// console.log(ip)
   getLongURL(req.params.shortURL)
     .then(result => {
       console.log(result)
       res.json(result);
     })
-})
+});
+
+
 
 const port = process.env.PORT || 3005;
 app.listen(port);

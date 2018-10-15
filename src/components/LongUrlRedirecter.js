@@ -9,16 +9,25 @@ class Redirecter extends Component {
     }
   }
   componentWillMount() {
-    axios.get(`/shortURL/${this.props.match.params.shortURL}`)
-      .then(result => {
-        this.setState({loading:false})
-        if (result.data.longURL) {
-          window.location = result.data.longURL;
-        } else {
-          this.setState({loading: false, invalidUrl:true})
-        }
+    const shortURL = this.props.match.params.shortURL;
+    axios.get(`http://ip-api.com/json`)
+      .then(response => {
+        console.log(response.data.country)
+        const country = response.data.country
+        return axios.post(`/shortURL/clickinfo`, {shortURL, country})
+        .then(() => {
+          return axios.get(`/shortURL/${this.props.match.params.shortURL}`)
+          .then(result => {
+            this.setState({loading:false})
+            if (result.data.longURL) {
+              window.location = result.data.longURL;
+            } else {
+              this.setState({loading: false, invalidUrl:true})
+            }
+          })
+        })
       })
-  }
+    }
   render() {
     return (
       <div>

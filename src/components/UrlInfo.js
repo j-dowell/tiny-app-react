@@ -6,6 +6,11 @@ import Typography from '@material-ui/core/Typography'
 import {Button} from '@material-ui/core'
 import Fade from '@material-ui/core/Fade';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import Grow from '@material-ui/core/Grow'
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import ListItemText from '@material-ui/core/ListItemText';
 
 class UrlInfo extends Component {
   constructor(props) {
@@ -18,6 +23,12 @@ class UrlInfo extends Component {
   componentWillReceiveProps(nextProps) {
     let countries = this.getCountries(nextProps.info)
     console.log(nextProps.info)
+    this.setState({countries})
+  }
+
+  componentDidMount() {
+    let countries = this.getCountries(this.props.info)
+    console.log(this.props.info)
     this.setState({countries})
   }
 
@@ -49,8 +60,10 @@ class UrlInfo extends Component {
 
     const { url, info, isLoading } = this.props;
     return (
-      <div>
-        {!isLoading ? ( 
+      <div style={containerStyle}>
+        {this.state.countries ? ( 
+        <Grow in={true}
+        {...(true ? { timeout: 1000 } : {})}>
         <div>
           <div>
             <Typography variant="h3">{url.name}</Typography>
@@ -70,12 +83,21 @@ class UrlInfo extends Component {
             >
               <Typography>Copied to clipboard!</Typography>
             </Fade>
-            <Typography>Times clicked: {info.length}</Typography>
-            <ul>Locations: 
-              {this.state.countries.map(x => <li key={x}>{x}</li>)}
-            </ul>
+            <Typography variant="h5">Clicks: {info.length}</Typography>
+            <Typography variant="h5">Countries:</Typography>
+            <List>
+              {this.state.countries.map(x => {
+                return (
+                  <ListItem key={x}>
+                    <ListItemText>{x}</ListItemText>
+                  </ListItem>
+                )
+              })}
+            </List>
           </div>
-        </div>) : (
+        </div>
+        </Grow>
+        ) : (
           <div style={loadingStyle}> 
             <CircularProgress size={50} />
           </div>
@@ -85,6 +107,14 @@ class UrlInfo extends Component {
   }
 }
 
+const loadingStyle = {
+  display: 'flex',
+  justifyContent: 'center',
+}
+
+const containerStyle = {
+  width:'100%'
+}
 
 const mapStateToProps = state => {
   return {

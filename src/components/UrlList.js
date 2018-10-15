@@ -6,7 +6,7 @@ import { viewUrl } from '../actions/viewUrlInfo'
 import { connect } from 'react-redux'
 import Button from '@material-ui/core/Button'
 import UrlMaterialList from '../components/material/UrlMaterialList'
-
+import Grow from '@material-ui/core/Grow'
 const singleUrlContainer = {
 
 }
@@ -20,7 +20,7 @@ const urlListContainer = {
 class UrlList extends Component {
   componentDidMount() {
     console.log('fetching')
-    this.props.dispatch(userUrls());
+    // this.props.dispatch(userUrls());
   }
 
   render() {
@@ -30,29 +30,35 @@ class UrlList extends Component {
       return <div>Error! {error.message}</div>;
     }
 
-    if (loading || usersLoading || loading_info) {
+    if (loading || usersLoading ) {
       return <div></div>;
     }
 
     return (
       <React.Fragment>
-        {items ? (
           <div style={urlListContainer}>
+        {items ? (
+          <React.Fragment>
           {items.map(item =>
-          <div key={item.shortURL} style={singleUrlContainer}>
-          <UrlMaterialList
-              name={item.name}
-              date={item.date_added}
-              shortUrl={item.shortURL}
-              url={(httpRegex.test(item.url)) ? (item.url) : ('https://' + item.url) }
-              // onDelete={() => deleteUrl(item.id)}
-              id={item.id}
-              item={item}
-          />
-            </div>
+            <Grow in={true}
+            {...{ timeout: 2000 }}
+            >
+              <div key={item.shortURL} style={singleUrlContainer}>
+                <UrlMaterialList
+                  name={item.name}
+                  date={item.date_added}
+                  shortUrl={item.shortURL}
+                  url={(httpRegex.test(item.url)) ? (item.url) : ('https://' + item.url) }
+                  // onDelete={() => deleteUrl(item.id)}
+                  id={item.id}
+                  item={item}
+                />
+                </div>
+              </Grow>
           )}
-          </div>
+            </React.Fragment>
         ) : (<p>Make a short url!</p>)}
+          </div>
       </React.Fragment>
     );
   }

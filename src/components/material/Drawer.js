@@ -3,20 +3,13 @@ import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
 import Button from '@material-ui/core/Button';
-import List from '@material-ui/core/List';
-import Divider from '@material-ui/core/Divider';
-import {Link} from 'react-router-dom';
-import SignOut from '../SignOut';
-import { signOutAction } from '../../actions';
-import NavList from './NavList';
 import AddUrlForm from './AddUrlForm'
-import {theme} from '../hoc/theme'
-import { MuiThemeProvider } from '@material-ui/core/styles';
 
 
 const styles = {
   list: {
-    width: 300,
+    width: 500,
+    height:250,
     textAlign:'center',
     paddingTop:'4em'
   },
@@ -25,7 +18,7 @@ const styles = {
   },
 };
 
-class TemporaryDrawer extends React.Component {
+class AddLinkSideBar extends React.Component {
   state = {
     top: false,
     left: false,
@@ -44,26 +37,26 @@ class TemporaryDrawer extends React.Component {
 
     const sideList = (
       <div className={classes.list}>
-        <MuiThemeProvider theme={theme}>
-          <AddUrlForm toggle={this.toggleDrawer('left', false)}/>
-        </MuiThemeProvider>
+        <AddUrlForm toggle={this.toggleDrawer('top', false)}/>
       </div>
     );
 
     return (
-      <div>
-        <Button color="primary" onClick={this.toggleDrawer('left', true)}>Add Link</Button>
-        <Drawer open={this.state.left} onClose={this.toggleDrawer('left', false)}>
-          <div
-            tabIndex={0}
-            role="button"
-            onClick={this.toggleDrawer('left', false)}
-            onKeyDown={this.toggleDrawer('left', false)}
-          >
-          </div>
-            {sideList}
-        </Drawer>
-      </div>
+      <React.Fragment>
+        <span><Button style={{paddingTop:'1em'}} color="primary" onClick={this.toggleDrawer('top', true)}>Add Link</Button></span>
+        <div>
+          <Drawer anchor="top" open={this.state.top} onClose={this.toggleDrawer('top', false)}>
+            <div
+              tabIndex={0}
+              role="button"
+              onClick={this.toggleDrawer('top', false)}
+              onKeyDown={this.toggleDrawer('top', false)}
+            >
+            </div>
+              {sideList}
+          </Drawer>
+        </div>
+      </React.Fragment>
     );
   }
 }
@@ -73,8 +66,8 @@ const formContainer = {
   textAlign: 'center'
 }
 
-TemporaryDrawer.propTypes = {
+AddLinkSideBar.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(TemporaryDrawer);
+export default withStyles(styles)(AddLinkSideBar);

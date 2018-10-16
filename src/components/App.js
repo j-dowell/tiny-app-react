@@ -32,7 +32,6 @@ class App extends Component {
         <Typography variant="h1" color="primary" style={{textAlign:'center'}}>TinyURL</Typography>
         <div style={buttons}>
           <Link to='urls' style={linkStyle}><Button style={viewButton}>View Links</Button></Link>
-          {/* <Link to='addurl' style={linkStyle}><Button color="primary">Add Link</Button></Link> */}
         </div>
       </div>
     )

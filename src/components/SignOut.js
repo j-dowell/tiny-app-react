@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { signOutAction } from '../actions';
 import { connect } from 'react-redux';
+import Button from '@material-ui/core/Button'
 
 class SignOut extends Component {
   click = () => {
@@ -9,7 +10,7 @@ class SignOut extends Component {
   render() {
     return (
       <div>
-        <button onClick={() => this.click()}>Sign Out</button>
+        <Button style={{paddingTop:'1em'}} color="secondary" onClick={() => this.click()}>Sign Out</Button>
       </div>
     );
   }
@@ -21,13 +22,5 @@ function mapDispatchToProps(dispatch) {
   })
 }
 
-
-// const SignOut = ({ dispatch, props  }) => {
-//     return (
-//       <div>
-//         <button onClick={() => dispatch(signOutAction(props.history))}>Sign Out</button>
-//       </div>
-//     );
-// }
 
 export default connect(null, mapDispatchToProps)(SignOut);

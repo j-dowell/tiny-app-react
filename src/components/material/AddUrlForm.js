@@ -4,9 +4,6 @@ import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button'
 import { connect } from 'react-redux';
 import { addUrl } from '../../actions/addUrl'
-import { withStyles, MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
-import purple from '@material-ui/core/colors/purple';
-import {theme} from '../hoc/theme'
 
 
 const urlRegex = /^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$/i
@@ -27,15 +24,18 @@ const validate = values => {
 const renderTextField = (
   { input, label, meta: { touched, error }, ...custom },
 ) => (
-  <MuiThemeProvider theme={theme}>
     <TextField
+      label={label}
+      style={{width:'50%', textAlign:'center'}}
       hintText={label}
       floatingLabelText={label}
       errorText={touched && error}
       {...input}
       {...custom}
+      inputStyle={{ textAlign: 'center' }}
+      hintStyle={{ width: '50%', textAlign: 'center' }}
+      floatingLabelStyle={{ textAlign: 'center', width: '100%'}}
     />
-  </MuiThemeProvider>
 );
 
 

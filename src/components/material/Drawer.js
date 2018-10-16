@@ -11,7 +11,8 @@ const styles = {
     width: 500,
     height:250,
     textAlign:'center',
-    paddingTop:'4em'
+    paddingTop:'4em',
+    margin:'auto',
   },
   fullList: {
     width: 'auto',

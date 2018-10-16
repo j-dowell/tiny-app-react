@@ -37,7 +37,7 @@ export function addUrl(newUrl, name, history) {
       .then(() => {
         dispatch(reset('addUrl'));
         dispatch(userUrls());
-        history.push('/urls')
+        // history.push('/urls')
       })
   }
 }

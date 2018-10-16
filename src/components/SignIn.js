@@ -6,6 +6,8 @@ import { connect } from 'react-redux';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import SignInForm from '../components/material/SignInForm'
+import Collapse from '@material-ui/core/Collapse';
+import SimpleCollapse from './SimpleCollapse';
 
 const container = {
   display: 'flex',
@@ -30,6 +32,12 @@ const addButton = {
   color: '#e57373',
 }
 class Signin extends Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      checked: false
+    }
+  }
   submit = (values) => {
     this.props.signInAction(values, this.props.history);
   }
@@ -44,12 +52,19 @@ class Signin extends Component {
     }
   }
 
+  signInCollapse = () => {
+    this.setState({
+      checked: true
+    })
+  }
+
   render() {
     const { handleSubmit } = this.props;
     return (
       <div style={container}>
       <Typography variant="h1" color="primary" style={{textAlign:'center'}}>TinyURL</Typography>
-      <SignInForm history={this.props.history}/>
+      {/* <Button direction="left" onClick={this.signInCollapse}>Sign In</Button> */}
+      <SimpleCollapse history={this.props.history}/>
     </div>
 
     );

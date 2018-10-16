@@ -34,6 +34,7 @@ const renderTextField = ({
   ...custom
 }) => (
   <TextField
+    label={label}
     hintText={label}
     floatingLabelText={label}
     errorText={touched && error}

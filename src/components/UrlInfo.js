@@ -22,6 +22,12 @@ class UrlInfo extends Component {
     }
   }
 
+  componentDidMount() {
+    let countries = this.getCountries(this.props.info)
+    console.log(this.props.info)
+    this.setState({countries})
+  }
+
   componentWillReceiveProps(nextProps) {
     let countries = this.getCountries(nextProps.info)
     console.log(nextProps.info)
@@ -66,7 +72,7 @@ class UrlInfo extends Component {
 
     return (
       <div>
-        {!isLoading ? (
+        {!isLoading && this.state.countries ? (
           <Grow in={true}
         {...(true ? { timeout: 1000 } : {})}>
         <div style={{paddingTop:'19px'}}>

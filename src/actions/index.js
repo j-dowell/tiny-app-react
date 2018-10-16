@@ -115,9 +115,10 @@ export function verifyUserToken(token) {
 }
 
 
-export function signOutAction() {
+export function signOutAction(history) {
   localStorage.clear();
   console.log(localStorage)
+  history.push('/')
   return {
     type: UNAUTHENTICATED
   }

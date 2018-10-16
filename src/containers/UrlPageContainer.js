@@ -23,7 +23,7 @@ class App extends Component {
         <div style={{display:'flex'}}>
           <UrlListContainer/>
           <UrlInfo/>
-          <SignOut signOutAction={signOutAction}/>
+          <SignOut history={this.props.history}/>
         </div>
       </div>
     );

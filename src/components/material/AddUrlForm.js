@@ -4,6 +4,10 @@ import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button'
 import { connect } from 'react-redux';
 import { addUrl } from '../../actions/addUrl'
+import { withStyles, MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
+import purple from '@material-ui/core/colors/purple';
+import {theme} from '../hoc/theme'
+
 
 const urlRegex = /^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$/i
 
@@ -23,13 +27,15 @@ const validate = values => {
 const renderTextField = (
   { input, label, meta: { touched, error }, ...custom },
 ) => (
-  <TextField
-    hintText={label}
-    floatingLabelText={label}
-    errorText={touched && error}
-    {...input}
-    {...custom}
-  />
+  <MuiThemeProvider theme={theme}>
+    <TextField
+      hintText={label}
+      floatingLabelText={label}
+      errorText={touched && error}
+      {...input}
+      {...custom}
+    />
+  </MuiThemeProvider>
 );
 
 
@@ -55,7 +61,7 @@ class AddUrlForm extends Component {
   }
 
   render() {
-    const { handleSubmit, pristine, reset, submitting } = this.props;
+    const { handleSubmit, pristine, reset, submitting, classes } = this.props;
     return (
       <form onSubmit={handleSubmit(this.submit)}>
         <div>
@@ -75,8 +81,8 @@ class AddUrlForm extends Component {
           />
         </div>
         <div>
-          <Button type="submit" disabled={pristine || submitting}>Submit</Button><br/>
-          <Button type="button" disabled={pristine || submitting} onClick={reset}>
+          <Button color="primary" type="submit" disabled={pristine || submitting}>Submit</Button><br/>
+          <Button color="secondary" type="button" disabled={pristine || submitting} onClick={reset}>
             Clear Values
           </Button>
         </div>
@@ -88,6 +94,7 @@ class AddUrlForm extends Component {
 function mapStateToProps(state) {
   return { errorMessage: state.auth.error}
 }
+
 
 const reduxFormAddUrl = reduxForm({
   form: 'AddUrlForm',

@@ -10,6 +10,9 @@ import SignOut from '../SignOut';
 import { signOutAction } from '../../actions';
 import NavList from './NavList';
 import AddUrlForm from './AddUrlForm'
+import {theme} from '../hoc/theme'
+import { MuiThemeProvider } from '@material-ui/core/styles';
+
 
 const styles = {
   list: {
@@ -41,7 +44,9 @@ class TemporaryDrawer extends React.Component {
 
     const sideList = (
       <div className={classes.list}>
-        <AddUrlForm toggle={this.toggleDrawer('left', false)}/>
+        <MuiThemeProvider theme={theme}>
+          <AddUrlForm toggle={this.toggleDrawer('left', false)}/>
+        </MuiThemeProvider>
       </div>
     );
 

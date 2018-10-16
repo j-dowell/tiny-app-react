@@ -8,6 +8,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 import { viewUrl, getURLInfo } from '../../actions/viewUrlInfo'
 import { connect } from 'react-redux'
 import theme from '../hoc/theme';
+import ordinalSuffixOf from '../../helpers/ordinalSuffixOf'
 
 const styles = theme => ({
   root: {
@@ -17,24 +18,10 @@ const styles = theme => ({
   },
 });
 
-function ordinal_suffix_of(i) {
-  var j = i % 10,
-      k = i % 100;
-  if (j == 1 && k != 11) {
-      return i + "st";
-  }
-  if (j == 2 && k != 12) {
-      return i + "nd";
-  }
-  if (j == 3 && k != 13) {
-      return i + "rd";
-  }
-  return i + "th";
-}
+
 const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
 "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
 ];
-
 
 
 class UrlMaterialList extends Component {
@@ -52,7 +39,7 @@ class UrlMaterialList extends Component {
     const dateObject = new Date(date)
     const day = dateObject.getDate();
     const month = dateObject.getMonth();
-    const dateConverted = `${ordinal_suffix_of(day)} ${monthNames[month]}`;
+    const dateConverted = `${ordinalSuffixOf(day)} ${monthNames[month]}`;
 
     return ( 
       <div >

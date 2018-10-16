@@ -12,6 +12,7 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import Grow from '@material-ui/core/Grow'
 import Divider from '@material-ui/core/Divider';
+import ordinalSuffixOf from '../helpers/ordinalSuffixOf'
 
 class UrlInfo extends Component {
   constructor(props) {
@@ -36,6 +37,15 @@ class UrlInfo extends Component {
     let uniqueCountries = countries.filter(onlyUnique);
     return uniqueCountries;
   }
+
+  convertDate = (input) => {
+    const longMonthNames = ["January","February","March","April","May","June","July", "August","September","October","November","December"];
+    const dateObject = new Date(input)
+    const day = dateObject.getDate();
+    const month = dateObject.getMonth();
+    const dateConverted = `${ordinalSuffixOf(day)} ${longMonthNames[month]}`;
+    return dateConverted
+  }
   
   render() {
     const copyToClipboard = str => {
@@ -51,9 +61,9 @@ class UrlInfo extends Component {
       }, 1000)
     };
 
-  
-
     const { url, info, isLoading } = this.props;
+
+
     return (
       <div>
         {!isLoading ? (
@@ -64,7 +74,7 @@ class UrlInfo extends Component {
             <Typography variant="h3">{url.name}</Typography>
             <Divider/>
             <Typography variant="h5">{url.url}</Typography>
-            <Typography variant="h5">Created {new Date(url.date_added).toLocaleString()}</Typography>
+            <Typography variant="h5">{this.convertDate(url.date_added)}</Typography>
             <Typography style={{display:'inline'}}variant="h5">tinyURL/</Typography><Typography style={{display:'inline'}} variant="h4" color="primary">{url.shortURL}</Typography>
             <div style={buttonContainer}>
               <Button onClick={() => copyToClipboard(url.shortURL)}>Copy</Button>

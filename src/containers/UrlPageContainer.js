@@ -7,6 +7,7 @@ import AddLinkSideBar from '../components/material/Drawer';
 import Typography from '@material-ui/core/Typography'
 import { signOutAction } from '../actions'
 import SignOut from '.././components/SignOut';
+import UrlList from '../components/UrlList'
 
 const styles = {
   title: {
@@ -24,7 +25,7 @@ class App extends Component {
         <SignOut history={this.props.history}/>
       </div>
         <div style={{display:'flex'}}>
-          <UrlListContainer/>
+          <UrlList/>
           <UrlInfo/>
         </div>
       </div>

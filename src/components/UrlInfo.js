@@ -67,12 +67,12 @@ class UrlInfo extends Component {
       }, 1000)
     };
 
-    const { url, info, isLoading } = this.props;
+    const { url, info, isLoading, loading } = this.props;
 
 
     return (
       <div>
-        {!isLoading && this.state.countries ? (
+        {!isLoading && !loading && this.state.countries ? (
           <Grow in={true}
         {...(true ? { timeout: 1000 } : {})}>
         <div style={{paddingTop:'19px'}}>
@@ -112,12 +112,35 @@ class UrlInfo extends Component {
           </div>
         </div>
         </Grow>) : (
-          <CircularProgress size={50} />
+          <div style={styles.wrap}>
+            <div style={styles.plus}>
+              <CircularProgress size={50} />
+            </div>
+          </div>
           )}
       </div>
     )
   }
 }
+const styles = {
+  loading: {
+    display:'flex',
+    alignItems:'center',
+    justifyItem:'center'
+  },
+  wrap: {
+    position: 'fixed',
+    width: '60%',
+    height:'10%',
+    display: 'flex',
+    alignItems: 'center',
+    top: '25%',
+    },
+    plus: {
+      display: 'flex', 
+      margin: '0 auto'
+    }
+  }
 
 const buttonContainer = {
   paddingTop: '2em'
@@ -128,6 +151,7 @@ const mapStateToProps = state => {
     url: state.urls.selectedUrl,
     info: state.urls.url_info,
     isLoading: state.urls.loading_info,
+    loading: state.urls.loading
   }
 }
 

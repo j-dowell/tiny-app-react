@@ -33,7 +33,7 @@ class UrlList extends Component {
     }
 
     if (loading || usersLoading) {
-      return <div></div>;
+      return <div style={urlListContainer}></div>;
     }
 
     return (

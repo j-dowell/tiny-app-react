@@ -7,6 +7,8 @@ import { connect } from 'react-redux'
 import Button from '@material-ui/core/Button'
 import UrlMaterialList from '../components/material/UrlMaterialList'
 import Grow from '@material-ui/core/Grow'
+import Typography from '@material-ui/core/Typography'
+
 const singleUrlContainer = {
 
 }
@@ -40,6 +42,7 @@ class UrlList extends Component {
           <Grow in={true}
         {...(true ? { timeout: 1000 } : {})}>
           <div style={urlListContainer}>
+          <Typography variant="h4">{items.length} links</Typography>
           {items.map(item =>
           <div key={item.shortURL} style={singleUrlContainer}>
           <UrlMaterialList

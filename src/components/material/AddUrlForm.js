@@ -41,6 +41,7 @@ class AddUrlForm extends Component {
   submit = (values) => { 
     const { url, name } = values;
     this.props.addUrl(url, name, this.props.history);
+    this.props.toggle()
   }
 
   errorMessage() {
@@ -74,7 +75,7 @@ class AddUrlForm extends Component {
           />
         </div>
         <div>
-          <Button type="submit" disabled={pristine || submitting}>Submit</Button>
+          <Button type="submit" disabled={pristine || submitting}>Submit</Button><br/>
           <Button type="button" disabled={pristine || submitting} onClick={reset}>
             Clear Values
           </Button>

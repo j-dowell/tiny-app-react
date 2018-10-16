@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Field, reduxForm } from 'redux-form';
 import { addUrl } from '../actions/addUrl'
 import { connect } from 'react-redux';
+import TextField from '@material-ui/core/TextField'
 
 const urlRegex = /^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$/i
 
@@ -56,7 +57,6 @@ class AddNewUrl extends Component {
     return (
       <div className="form">
         <div className="container">
-          <h2>Add URL</h2>
           <form onSubmit={ handleSubmit(this.submit) }>
             <Field name="name" 
                    type="text"
@@ -70,6 +70,13 @@ class AddNewUrl extends Component {
               placeholder="www.google.com"
               component={renderField}
             />
+             <TextField
+          id="standard-name"
+          label="Name"
+              component={renderField}
+
+          margin="normal"
+        />
             <button type="submit" className="blue">Add</button>
           </form>
           {this.errorMessage()}

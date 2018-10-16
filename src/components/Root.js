@@ -21,8 +21,7 @@ const Root = ({ store }) => (
         <Route exact path="/signin" component={noRequireAuth(SignIn)} />
         <Route exact path="/register" component={noRequireAuth(Register)}/>
         <Route exact path="/urls" component={requireAuth(UrlPageContainer)} />
-        <Route exact path='/addurl' component={requireAuth(AddUrlPage)} />
-        <Route exact path="/" component={noRequireAuth(App)} />
+        <Route exact path="/" component={requireAuth(App)} />
         <Route path="/:shortURL" component={Redirecter}/>
       </Switch>
     </Router>

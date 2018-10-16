@@ -1,8 +1,34 @@
 import React, { Component } from 'react';
 import { Field, reduxForm } from 'redux-form';
 import { signInAction } from '../actions';
+import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
+import Typography from '@material-ui/core/Typography';
+import Button from '@material-ui/core/Button';
+import SignInForm from '../components/material/SignInForm'
 
+const container = {
+  display: 'flex',
+  alignItems: "center",
+  height: '-webkit-fill-available',
+}
+
+const buttons = {
+  display: 'flex',
+  justifyContent: 'spaceEvenly'
+}
+
+const linkStyle = {
+  textDecoration: 'none'
+}
+
+const viewButton = {
+  color: '#e57373',
+}
+
+const addButton = {
+  color: '#e57373',
+}
 class Signin extends Component {
   submit = (values) => {
     this.props.signInAction(values, this.props.history);
@@ -21,25 +47,11 @@ class Signin extends Component {
   render() {
     const { handleSubmit } = this.props;
     return (
-      <div className="form">
-        <div className="container">
-          <h2>Sign In</h2>
-          <form onSubmit={ handleSubmit(this.submit) }>
-            <Field name="email"
-                   component="input"
-                   type="text"
-                   placeholder="Email" 
-            />
-            <Field name="password" 
-                   component="input"
-                   type="password"
-                   placeholder="Password" 
-            />
-            <button type="submit" className="blue">Sign In</button>
-          </form>
-          {this.errorMessage()}
-        </div>
-      </div>
+      <div style={container}>
+      <Typography variant="h1" color="primary" style={{textAlign:'center'}}>TinyURL</Typography>
+      <SignInForm history={this.props.history}/>
+    </div>
+
     );
   }
 }

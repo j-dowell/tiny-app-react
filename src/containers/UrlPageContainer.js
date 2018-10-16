@@ -5,6 +5,8 @@ import UrlInfo from '../components/UrlInfo';
 import { Link } from 'react-router-dom';
 import TemporaryDrawer from '../components/material/Drawer';
 import Typography from '@material-ui/core/Typography'
+import { signOutAction } from '../actions'
+import SignOut from '.././components/SignOut';
 
 const styles = {
   title: {
@@ -21,6 +23,7 @@ class App extends Component {
         <div style={{display:'flex'}}>
           <UrlListContainer/>
           <UrlInfo/>
+          <SignOut signOutAction={signOutAction}/>
         </div>
       </div>
     );

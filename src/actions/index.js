@@ -89,7 +89,7 @@ export function signInAction({ email, password }, history) {
       dispatch(loggedIn());
       dispatch({ type: AUTHENTICATED });
       console.log(localStorage) 
-      history.push('/');
+      history.push('/urls');
     })
   } 
 }

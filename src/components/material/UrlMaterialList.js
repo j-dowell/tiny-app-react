@@ -43,7 +43,7 @@ class UrlMaterialList extends Component {
 
     return ( 
       <div >
-        <List component="nav">
+        <List  style={{padding:0}} component="nav">
           <ListItem button onClick={() => this.click(item)}>
             <ListItemText primary={name} secondary={dateConverted}/><br/>
           </ListItem>

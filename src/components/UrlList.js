@@ -10,13 +10,14 @@ import Grow from '@material-ui/core/Grow'
 import Typography from '@material-ui/core/Typography'
 
 const singleUrlContainer = {
+  borderRight: '1px solid lightgrey'
 
 }
 
 const urlListContainer = {
   overflow: 'scroll',
   height: '-webkit-fill-available',
-  width:'20%'
+  width:'20%',
 }
 
 class UrlList extends Component {
@@ -40,9 +41,9 @@ class UrlList extends Component {
       <React.Fragment>
         {items ? (
           <Grow in={true}
-        {...(true ? { timeout: 1000 } : {})}>
+        {...{ timeout: 1000 }}>
           <div style={urlListContainer}>
-          <Typography variant="h4">{items.length} links</Typography>
+          <Typography style={{paddingLeft:'0.6em'}} variant="h4">{items.length} links</Typography>
           {items.map(item =>
           <div key={item.shortURL} style={singleUrlContainer}>
           <UrlMaterialList

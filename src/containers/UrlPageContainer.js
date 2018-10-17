@@ -11,7 +11,8 @@ import UrlList from '../components/UrlList'
 
 const styles = {
   title: {
-    textAlign: 'center'
+    textAlign: 'center',
+    padding: '0 1em'
   }
 }
 

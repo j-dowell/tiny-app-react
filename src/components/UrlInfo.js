@@ -75,9 +75,9 @@ class UrlInfo extends Component {
         {!isLoading && !loading && this.state.countries ? (
           <Grow in={true}
         {...(true ? { timeout: 1000 } : {})}>
-        <div style={{paddingTop:'19px'}}>
+        <div style={{paddingLeft:'1em'}}>
           <div>
-            <Typography variant="h3">{url.name}</Typography>
+            <Typography variant="h4">{url.name}</Typography>
             <Divider/>
             <Typography variant="h5">{url.url}</Typography>
             <Typography variant="h5">{this.convertDate(url.date_added)}</Typography>

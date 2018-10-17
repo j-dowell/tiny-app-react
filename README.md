@@ -9,3 +9,4 @@ In progress - Link shortening app, built with React + Redux. Authentication with
 * MongoDB
 * JWT
 * D3
+* MaterialUI

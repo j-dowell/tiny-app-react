@@ -13,6 +13,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 import Grow from '@material-ui/core/Grow'
 import Divider from '@material-ui/core/Divider';
 import ordinalSuffixOf from '../helpers/ordinalSuffixOf'
+import {Test} from './data-vis/Test'
 
 class UrlInfo extends Component {
   constructor(props) {
@@ -110,6 +111,7 @@ class UrlInfo extends Component {
               })}
             </List>
           </div>
+          <Test/>
         </div>
         </Grow>) : (
           <div style={styles.wrap}>

@@ -22,7 +22,8 @@
     "redux-logger": "^3.0.6",
     "redux-thunk": "^2.3.0",
     "typeface-josefin-sans": "0.0.54",
-    "typeface-montserrat": "0.0.54"
+    "typeface-montserrat": "0.0.54",
+    "victory": "^30.5.1"
   },
   "scripts": {
     "start": "react-scripts start",

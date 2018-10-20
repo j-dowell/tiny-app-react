@@ -37,15 +37,17 @@ class UrlInfo extends Component {
     function onlyUnique(value, index, self) { 
       return self.indexOf(value) === index;
     }  
+    // Making an array of unique countries
     let countries = [];
     clickInfoObject.forEach(object => countries.push(object.country))
     let uniqueCountries = countries.filter(onlyUnique);
+    // Array of objects with country name and number of clicks
     let countryAndCount = [];
     uniqueCountries.forEach(country => countryAndCount.push(this.getCountryCount(country, clickInfoObject)));
-    console.log(countryAndCount)
     return countryAndCount;
   }
 
+  // Returns an object of country name and its number of clicks
   getCountryCount = (country, list) => {
     let count = 0;
     list.forEach(item => {
@@ -70,8 +72,6 @@ class UrlInfo extends Component {
   }
   
   render() {
-    console.log(this.state.countries)
-
     const copyToClipboard = str => {
       const el = document.createElement('textarea');
       el.value = str;
@@ -128,7 +128,7 @@ class UrlInfo extends Component {
               })}
             </List>
           </div>
-          <Test/>
+          <Test data={this.state.countries}/>
         </div>
         </Grow>) : (
           <div style={styles.wrap}>

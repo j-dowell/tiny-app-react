@@ -25,13 +25,11 @@ class UrlInfo extends Component {
 
   componentDidMount() {
     let countries = this.getCountries(this.props.info)
-    console.log(this.props.info)
     this.setState({countries})
   }
 
   componentWillReceiveProps(nextProps) {
     let countries = this.getCountries(nextProps.info)
-    console.log(nextProps.info)
     this.setState({countries})
   }
 
@@ -42,8 +40,25 @@ class UrlInfo extends Component {
     let countries = [];
     clickInfoObject.forEach(object => countries.push(object.country))
     let uniqueCountries = countries.filter(onlyUnique);
-    return uniqueCountries;
+    let countryAndCount = [];
+    uniqueCountries.forEach(country => countryAndCount.push(this.getCountryCount(country, clickInfoObject)));
+    console.log(countryAndCount)
+    return countryAndCount;
   }
+
+  getCountryCount = (country, list) => {
+    let count = 0;
+    list.forEach(item => {
+      if (item.country === country) {
+        count++
+      }
+    })
+    return {
+      country,
+      count
+    }
+  }
+
 
   convertDate = (input) => {
     const longMonthNames = ["January","February","March","April","May","June","July", "August","September","October","November","December"];
@@ -55,6 +70,8 @@ class UrlInfo extends Component {
   }
   
   render() {
+    console.log(this.state.countries)
+
     const copyToClipboard = str => {
       const el = document.createElement('textarea');
       el.value = str;
@@ -104,8 +121,8 @@ class UrlInfo extends Component {
             <List>
               {this.state.countries.map(x => {
                 return (
-                  <ListItem key={x}>
-                    <ListItemText>{x}</ListItemText>
+                  <ListItem key={x.country}>
+                    <ListItemText>{x.country} - {x.count} click{(x.count !== 1) && 's'}</ListItemText>
                   </ListItem>
                 )
               })}

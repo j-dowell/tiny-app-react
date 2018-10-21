@@ -13,7 +13,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 import Grow from '@material-ui/core/Grow'
 import Divider from '@material-ui/core/Divider';
 import ordinalSuffixOf from '../helpers/ordinalSuffixOf'
-import {Test} from './data-vis/Test'
+import {CountryPieChart} from './data-vis/CountryPieChart'
 
 class UrlInfo extends Component {
   constructor(props) {
@@ -117,7 +117,7 @@ class UrlInfo extends Component {
             <Typography variant="h4">Statistics</Typography>
             <Divider/>
             <Typography variant="h5">Clicks: {info.length}</Typography>
-            <Typography variant="h5">Countries:</Typography>
+            {/* <Typography variant="h5">Countries:</Typography>
             <List>
               {this.state.countries.map(x => {
                 return (
@@ -126,9 +126,9 @@ class UrlInfo extends Component {
                   </ListItem>
                 )
               })}
-            </List>
+            </List> */}
           </div>
-          <Test data={this.state.countries}/>
+          <CountryPieChart data={this.state.countries}/>
         </div>
         </Grow>) : (
           <div style={styles.wrap}>

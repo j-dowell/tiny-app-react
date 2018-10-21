@@ -1,6 +1,5 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
-import { VictoryBar, VictoryLegend, VictoryChart, VictoryLabel, VictoryTooltip, VictoryPie } from 'victory';
+import { VictoryLegend, VictoryTooltip, VictoryPie } from 'victory';
 
 export class CustomLabel extends React.Component {
   render() {
@@ -25,7 +24,7 @@ export class CustomLabel extends React.Component {
 
 CustomLabel.defaultEvents = VictoryTooltip.defaultEvents;
 
-export class Test extends React.Component {
+export class CountryPieChart extends React.Component {
   constructor(props) {
     super(props);
     this.state = {

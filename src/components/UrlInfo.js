@@ -89,7 +89,7 @@ class UrlInfo extends Component {
 
 
     return (
-      <div>
+      <div style={{width:'75%'}}>
         {!isLoading && !loading && this.state.countries ? (
           <Grow in={true}
         {...(true ? { timeout: 1000 } : {})}>
@@ -114,21 +114,26 @@ class UrlInfo extends Component {
             >
               <Typography color="secondary" style={{paddingBottom:'1em', paddingLeft:"1em"}}>Copied to clipboard!</Typography>
             </Fade>
-            <Typography variant="h4">Statistics</Typography>
-            <Divider/>
-            <Typography variant="h5">Clicks: {info.length}</Typography>
-            {/* <Typography variant="h5">Countries:</Typography>
-            <List>
-              {this.state.countries.map(x => {
-                return (
-                  <ListItem key={x.country}>
-                    <ListItemText>{x.country} - {x.count} click{(x.count !== 1) && 's'}</ListItemText>
-                  </ListItem>
-                )
-              })}
-            </List> */}
-          </div>
-          <CountryPieChart data={this.state.countries}/>
+            <div>
+              <Typography variant="h4">Statistics</Typography>
+              <Divider/>
+              <Typography variant="h5">Clicks: {info.length}</Typography>
+              {/* <Typography variant="h5">Countries:</Typography>
+              <List>
+                {this.state.countries.map(x => {
+                  return (
+                    <ListItem key={x.country}>
+                      <ListItemText>{x.country} - {x.count} click{(x.count !== 1) && 's'}</ListItemText>
+                    </ListItem>
+                  )
+                })}
+              </List> */}
+            <div style={{display:'flex'}}>
+              <CountryPieChart data={this.state.countries}/>
+              <CountryPieChart data={this.state.countries}/>
+            </div>
+            </div>
+            </div>
         </div>
         </Grow>) : (
           <div style={styles.wrap}>

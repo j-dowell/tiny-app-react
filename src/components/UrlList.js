@@ -17,7 +17,7 @@ const singleUrlContainer = {
 const urlListContainer = {
   overflow: 'scroll',
   height: '-webkit-fill-available',
-  width:'20%',
+  width:'15%',
 }
 
 class UrlList extends Component {

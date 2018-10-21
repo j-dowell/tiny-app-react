@@ -20,12 +20,13 @@ class App extends Component {
   render() {
     return (
       <div>
+
       <div style={{display:'flex', justifyContent:'center', padding:'3em'}}>
         <AddLinkSideBar/>
         <Typography variant='h1' style={styles.title}>Your Links</Typography>
         <SignOut history={this.props.history}/>
       </div>
-        <div style={{display:'flex'}}>
+        <div style={{display:'flex', flexWrap:'wrap'}}>
           <UrlList/>
           <UrlInfo/>
         </div>

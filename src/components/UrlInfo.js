@@ -13,6 +13,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 import Grow from '@material-ui/core/Grow'
 import Divider from '@material-ui/core/Divider';
 import ordinalSuffixOf from '../helpers/ordinalSuffixOf'
+import {Test} from './data-vis/Test'
 
 class UrlInfo extends Component {
   constructor(props) {
@@ -24,13 +25,11 @@ class UrlInfo extends Component {
 
   componentDidMount() {
     let countries = this.getCountries(this.props.info)
-    console.log(this.props.info)
     this.setState({countries})
   }
 
   componentWillReceiveProps(nextProps) {
     let countries = this.getCountries(nextProps.info)
-    console.log(nextProps.info)
     this.setState({countries})
   }
 
@@ -38,11 +37,30 @@ class UrlInfo extends Component {
     function onlyUnique(value, index, self) { 
       return self.indexOf(value) === index;
     }  
+    // Making an array of unique countries
     let countries = [];
     clickInfoObject.forEach(object => countries.push(object.country))
     let uniqueCountries = countries.filter(onlyUnique);
-    return uniqueCountries;
+    // Array of objects with country name and number of clicks
+    let countryAndCount = [];
+    uniqueCountries.forEach(country => countryAndCount.push(this.getCountryCount(country, clickInfoObject)));
+    return countryAndCount;
   }
+
+  // Returns an object of country name and its number of clicks
+  getCountryCount = (country, list) => {
+    let count = 0;
+    list.forEach(item => {
+      if (item.country === country) {
+        count++
+      }
+    })
+    return {
+      country,
+      count
+    }
+  }
+
 
   convertDate = (input) => {
     const longMonthNames = ["January","February","March","April","May","June","July", "August","September","October","November","December"];
@@ -103,13 +121,14 @@ class UrlInfo extends Component {
             <List>
               {this.state.countries.map(x => {
                 return (
-                  <ListItem key={x}>
-                    <ListItemText>{x}</ListItemText>
+                  <ListItem key={x.country}>
+                    <ListItemText>{x.country} - {x.count} click{(x.count !== 1) && 's'}</ListItemText>
                   </ListItem>
                 )
               })}
             </List>
           </div>
+          <Test data={this.state.countries}/>
         </div>
         </Grow>) : (
           <div style={styles.wrap}>

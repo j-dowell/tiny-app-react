@@ -78,15 +78,15 @@ export class CountryPieChart extends React.Component {
             labelComponent={<CustomLabel/>}
             data={this.state.data}
           />
-          <VictoryLegend x={125} y={50}
+          {/* <VictoryLegend x={150} y={50}
             title="Legend"
             centerTitle
             orientation="vertical"
-            gutter={20}
+            // gutter={20}
             style={{ border: { stroke: "black" }, title: {fontSize: 20 } }}
             colorScale={colorArray}
             data={this.state.data}
-          />
+          /> */}
         </div>
         ) : (
           <p>loading</p>

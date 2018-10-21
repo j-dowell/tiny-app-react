@@ -89,7 +89,7 @@ export class CountryPieChart extends React.Component {
           /> */}
         </div>
         ) : (
-          <p>loading</p>
+          <p>Loading</p>
         )}
         </div>
     );

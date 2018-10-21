@@ -77,6 +77,7 @@ export function signInAction({ email, password }, history) {
     .then(res => {
       console.log(res);
       if (!res.data.auth) {
+        localStorage.removeItem('user');
         dispatch({
           type: AUTHENTICATION_ERROR,
           payload: 'Invalid email or password'

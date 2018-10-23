@@ -25,13 +25,21 @@ class UrlInfo extends Component {
   }
 
   componentDidMount() {
-    let countries = this.getCountries(this.props.info)
-    this.setState({countries})
+	let countries = this.getCountries(this.props.info)
+	let datesClicked = this.getDatesClicked(nextProps.info)	
+  this.setState({countries, datesClicked})
   }
 
   componentWillReceiveProps(nextProps) {
-    let countries = this.getCountries(nextProps.info)
-    this.setState({countries})
+	let countries = this.getCountries(nextProps.info)
+	let datesClicked = this.getDatesClicked(nextProps.info)
+  this.setState({countries, datesClicked})
+  }
+
+  getDatesClicked = (clickInfoObject) => {
+    let dates = [];
+    clickInfoObject.forEach(object => dates.push(object.date));
+    return dates;
   }
 
   getCountries = (clickInfoObject) => {

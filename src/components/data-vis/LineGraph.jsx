@@ -70,7 +70,8 @@ render() {
 			<VictoryChart
 				scale={{ x: "time" }}
 			>
-				<VictoryBar
+				<VictoryLine
+					tickFormat={(t) => `${t.toFixed(0)}`}
 					labelComponent={<VictoryTooltip/>}
 					style={{
 					data: { stroke: "#c43a31" },

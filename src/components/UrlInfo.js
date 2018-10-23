@@ -14,6 +14,7 @@ import Grow from '@material-ui/core/Grow'
 import Divider from '@material-ui/core/Divider';
 import ordinalSuffixOf from '../helpers/ordinalSuffixOf'
 import {CountryPieChart} from './data-vis/CountryPieChart'
+import { LineGraph } from './data-vis/LineGraph';
 
 class UrlInfo extends Component {
   constructor(props) {
@@ -130,7 +131,7 @@ class UrlInfo extends Component {
               </List> */}
             <div style={{display:'flex'}}>
               <CountryPieChart data={this.state.countries}/>
-              <CountryPieChart data={this.state.countries}/>
+			  <LineGraph/>
             </div>
             </div>
             </div>

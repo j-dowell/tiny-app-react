@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { VictoryChart, VictoryLine } from 'victory';
+import { VictoryChart, VictoryLine, VictoryBar } from 'victory';
 
 
 export class LineGraph extends Component {
@@ -52,7 +52,7 @@ render() {
 		<div>
 		{this.state.data ? (
 			<VictoryChart>
-				<VictoryLine
+				<VictoryBar
 					style={{
 					data: { stroke: "#c43a31" },
 					parent: { border: "1px solid #ccc"}

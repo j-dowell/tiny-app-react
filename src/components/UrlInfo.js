@@ -26,7 +26,7 @@ class UrlInfo extends Component {
 
   componentDidMount() {
 	let countries = this.getCountries(this.props.info)
-	let datesClicked = this.getDatesClicked(nextProps.info)	
+	let datesClicked = this.getDatesClicked(this.props.info)	
   this.setState({countries, datesClicked})
   }
 
@@ -139,7 +139,7 @@ class UrlInfo extends Component {
               </List> */}
             <div style={{display:'flex'}}>
               <CountryPieChart data={this.state.countries}/>
-			  <LineGraph/>
+              <LineGraph data={this.state.datesClicked}/>
             </div>
             </div>
             </div>

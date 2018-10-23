@@ -17,19 +17,34 @@ export class LineGraph extends Component {
 		})
 	}
 	convertData = (data) => {
-		let uniqueDaysArray = [];
 		let formattedArray = [];
 		console.log(data)
-		for (let i = 0; i < data.length; i++) {
-			if (!uniqueDaysArray.includes(data[i].slice(0, 10))) {
-				uniqueDaysArray.push(data[i].slice(0, 10));
-			}
+
+		const start = new Date(data[0])
+    let end = new Date()
+    let year = start.getFullYear()
+    let month = start.getMonth()
+    let day = start.getDate()
+    let uniqueDaysArray = [start];
+
+		while(uniqueDaysArray[uniqueDaysArray.length-1] < end) {
+			uniqueDaysArray.push(new Date(year, month, ++day));
 		}
+
+		function sameDay(d1, d2) {
+			let date1 = new Date(d1);
+			let date2 = new Date(d2);
+			return date1.getFullYear() === date2.getFullYear() && 
+				date1.getMonth() === date2.getMonth() && 
+				date1.getDate() === date2.getDate();
+		}
+
 		console.log(uniqueDaysArray)
 		function countClicks(date, list) {
 			let count = 0;
 			for (let i = 0; i < list.length; i++) {
-				if (date === list[i].slice(0, 10)) {
+				console.log(list[i])
+				if (sameDay(date, list[i])) {
 					count++
 				}
 			}

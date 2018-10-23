@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { VictoryChart, VictoryLine, VictoryBar } from 'victory';
+import { VictoryChart, VictoryLine, VictoryBar, VictoryTooltip } from 'victory';
 
 
 export class LineGraph extends Component {
@@ -53,8 +53,9 @@ export class LineGraph extends Component {
 		for (let i = 0; i < uniqueDaysArray.length; i++) {
 			let day = uniqueDaysArray[i]
 			let uniqueClickObject = {};
-			uniqueClickObject['x'] = day
+			uniqueClickObject['x'] = new Date(day);
 			uniqueClickObject['y'] = countClicks(day, data);
+			uniqueClickObject['label'] = countClicks(day, data);
 			formattedArray.push(uniqueClickObject);
 		}
 		console.log(formattedArray)
@@ -66,8 +67,11 @@ render() {
 	return (
 		<div>
 		{this.state.data ? (
-			<VictoryChart>
+			<VictoryChart
+				scale={{ x: "time" }}
+			>
 				<VictoryBar
+					labelComponent={<VictoryTooltip/>}
 					style={{
 					data: { stroke: "#c43a31" },
 					parent: { border: "1px solid #ccc"}

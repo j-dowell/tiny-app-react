@@ -14,6 +14,7 @@ import Grow from '@material-ui/core/Grow'
 import Divider from '@material-ui/core/Divider';
 import ordinalSuffixOf from '../helpers/ordinalSuffixOf'
 import {CountryPieChart} from './data-vis/CountryPieChart'
+import { LineGraph } from './data-vis/LineGraph';
 
 class UrlInfo extends Component {
   constructor(props) {
@@ -24,13 +25,21 @@ class UrlInfo extends Component {
   }
 
   componentDidMount() {
-    let countries = this.getCountries(this.props.info)
-    this.setState({countries})
+	let countries = this.getCountries(this.props.info)
+	let datesClicked = this.getDatesClicked(this.props.info)	
+  this.setState({countries, datesClicked})
   }
 
   componentWillReceiveProps(nextProps) {
-    let countries = this.getCountries(nextProps.info)
-    this.setState({countries})
+	let countries = this.getCountries(nextProps.info)
+	let datesClicked = this.getDatesClicked(nextProps.info)
+  this.setState({countries, datesClicked})
+  }
+
+  getDatesClicked = (clickInfoObject) => {
+    let dates = [];
+    clickInfoObject.forEach(object => dates.push(object.date));
+    return dates;
   }
 
   getCountries = (clickInfoObject) => {
@@ -130,7 +139,7 @@ class UrlInfo extends Component {
               </List> */}
             <div style={{display:'flex'}}>
               <CountryPieChart data={this.state.countries}/>
-              <CountryPieChart data={this.state.countries}/>
+              <LineGraph data={this.state.datesClicked}/>
             </div>
             </div>
             </div>

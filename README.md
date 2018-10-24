@@ -1,5 +1,7 @@
 # TinyURL 2.0
-In progress - Link shortening app, built with React + Redux. Authentication with JWT. Data visualisation with D3.
+Link shortening and management app, complete with data visualisation and click analytics. Users can see a breakdown of the locations from which their links have been clicked and at what time.
+JWTs used for authentication.
+
 
 # Tech Stack
 * React
@@ -8,5 +10,5 @@ In progress - Link shortening app, built with React + Redux. Authentication with
 * Node
 * MongoDB
 * JWT
-* D3
+* Victory Charts
 * MaterialUI

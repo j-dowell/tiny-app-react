@@ -3,7 +3,6 @@ import { Field, reduxForm } from 'redux-form';
 import { addUrl } from '../actions/addUrl'
 import { connect } from 'react-redux';
 import TextField from '@material-ui/core/TextField'
-
 const urlRegex = /^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$/i
 
 const validate = values => {

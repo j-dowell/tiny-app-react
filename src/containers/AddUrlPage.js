@@ -20,7 +20,6 @@ class App extends Component {
         <TemporaryDrawer/> 
         <Typography variant='h1' style={styles.title}>Add Link</Typography>
         <div style={{display:'flex'}}>
-          {/* <Add history={this.props.history}/> */}
           <AddUrlForm history={this.props.history}/>
         </div>
       </div>

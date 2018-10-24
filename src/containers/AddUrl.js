@@ -25,16 +25,4 @@ const AddUrl = ({dispatch}) => {
   )
 }
 
-// const mapStateToProps = state => {
-//   return {
-//     store: state.store
-//   }
-// }
-// const mapDispatchToProps = dispatch => {
-//   return {
-//     submitUrl: (url, name) => {
-//       dispatch(addUrl(url, name))
-//     }
-//   }
-// }
 export default connect()(AddUrl)

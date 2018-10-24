@@ -65,28 +65,24 @@ class Register extends Component {
           <h2>Register</h2>
           <form onSubmit={ handleSubmit(this.submit) }>
             <Field name="email"
-                  //  component="input"
                    type="email"
                    label="Email"
                    placeholder="Email"
                    component={renderField}
             />
             <Field name="password" 
-                  //  component="input"
                    type="password"
                    label="Password"
                    placeholder="Password"
                    component={renderField}
             />
             <Field name="first_name" 
-                  //  component="input"
                    type="text"
                    label="First Name"
                    placeholder="John"
                    component={renderField}
             />
             <Field name="last_name" 
-                  //  component="input"
                    type="text"
                    label="Last Name"
                    placeholder="Smith"

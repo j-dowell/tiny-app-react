@@ -1,10 +1,6 @@
 import React, { Component } from 'react';
-// import PropTypes from 'prop-types';
-import Url from './Url';
 import { userUrls } from '../actions'
-import { viewUrl } from '../actions/viewUrlInfo'
 import { connect } from 'react-redux'
-import Button from '@material-ui/core/Button'
 import UrlMaterialList from '../components/material/UrlMaterialList'
 import Grow from '@material-ui/core/Grow'
 import Typography from '@material-ui/core/Typography'
@@ -51,7 +47,6 @@ class UrlList extends Component {
               date={item.date_added}
               shortUrl={item.shortURL}
               url={(httpRegex.test(item.url)) ? (item.url) : ('https://' + item.url) }
-              // onDelete={() => deleteUrl(item.id)}
               id={item.id}
               item={item}
           />
@@ -75,16 +70,6 @@ const mapStateToProps = state => {
   }
 }
 
-// UrlList.PropTypes = {
-//   urls: PropTypes.arrayOf(
-//     PropTypes.shape({
-//       id: PropTypes.number.isRequired,
-//       name: PropTypes.string.isRequired,
-//       url: PropTypes.string.isRequired,
-//     }).isRequired
-//   ).isRequired,
-//   deleteUrl: PropTypes.func.isRequired
-// }
 export default connect(
   mapStateToProps,
 )(UrlList)

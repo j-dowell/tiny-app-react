@@ -1,5 +1,6 @@
 # TinyURL 2.0
-Link shortening and management app, complete with data visualisation and click analytics. Users can see a breakdown of the locations from which their links have been clicked and at what time.
+Link shortening and management app, complete with data visualisation and click analytics. Users can add links and see visualizations of where their links have been clicked from and at what time.
+
 JWTs used for authentication.
 
 

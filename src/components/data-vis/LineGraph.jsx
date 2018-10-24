@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { VictoryChart, VictoryLine, VictoryBar, VictoryTooltip } from 'victory';
-
+import { theme } from '../hoc/theme'
 
 export class LineGraph extends Component {
 	constructor(props) {
@@ -21,6 +21,7 @@ export class LineGraph extends Component {
 		console.log(data)
 
 		const start = new Date(data[0])
+		start.setDate(start.getDate() - 2);
     let end = new Date()
     let year = start.getFullYear()
     let month = start.getMonth()
@@ -55,7 +56,9 @@ export class LineGraph extends Component {
 			let uniqueClickObject = {};
 			uniqueClickObject['x'] = new Date(day);
 			uniqueClickObject['y'] = countClicks(day, data);
-			uniqueClickObject['label'] = countClicks(day, data);
+			uniqueClickObject['label'] = 
+				`Total clicks: ${countClicks(day, data)}
+					${day.toLocaleDateString()}`;
 			formattedArray.push(uniqueClickObject);
 		}
 		console.log(formattedArray)
@@ -70,11 +73,11 @@ render() {
 			<VictoryChart
 				scale={{ x: "time" }}
 			>
-				<VictoryLine
+				<VictoryBar
 					tickFormat={(t) => `${t.toFixed(0)}`}
 					labelComponent={<VictoryTooltip/>}
 					style={{
-					data: { stroke: "#c43a31" },
+					data: { stroke: "#c43a31", fill: theme.palette.primary.main},
 					parent: { border: "1px solid #ccc"}
 					}}
 					data={this.state.data}

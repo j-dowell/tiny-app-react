@@ -98,7 +98,7 @@ class UrlInfo extends Component {
 
 
     return (
-      <div style={{width:'75%'}}>
+      <div style={{width:'75%', padding: '0 2em'}}>
         {!isLoading && !loading && this.state.countries ? (
           <Grow in={true}
         {...(true ? { timeout: 1000 } : {})}>
@@ -176,7 +176,7 @@ const styles = {
   }
 
 const buttonContainer = {
-  paddingTop: '2em'
+  paddingTop: '1em'
 }
 
 const mapStateToProps = state => {
@@ -187,13 +187,6 @@ const mapStateToProps = state => {
     loading: state.urls.loading
   }
 }
-
-// const mapDispatchToProps = dispatch => {
-//   // return {
-//   //   onDelete: (id) =>
-//   //     dispatch(deleteUrl(id))
-//   // }
-// }
 
 export default connect(
   mapStateToProps

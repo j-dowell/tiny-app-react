@@ -3,8 +3,12 @@ Link shortening and management app, complete with data visualisation and click a
 
 JWTs used for authentication.
 
+## Screenshots
+![Main page](https://github.com/j-dowell/tiny-app-react/blob/master/docs/url-info.png?raw=true)
+![Statistics](https://github.com/j-dowell/tiny-app-react/blob/master/docs/statistics.png?raw=true)
+![Adding a new link](https://github.com/j-dowell/tiny-app-react/blob/master/docs/add-url.png?raw=true)
 
-# Tech Stack
+## Tech Stack
 * React
 * Redux
 * Express
@@ -13,3 +17,4 @@ JWTs used for authentication.
 * JWT
 * Victory Charts
 * MaterialUI
+
